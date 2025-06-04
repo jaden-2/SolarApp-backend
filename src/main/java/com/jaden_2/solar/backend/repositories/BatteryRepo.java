@@ -5,6 +5,7 @@ import com.jaden_2.solar.backend.entities.enums.BatteryCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -22,10 +23,9 @@ public interface BatteryRepo extends JpaRepository<Battery, Integer> {
      *
      * @param type          Type of battery requested
      * @param systemVoltage System voltage
-     * @param current
      * @return Optional Battery
      */
-    public Optional<Battery> findTopByTypeAndVoltageGreaterThanEqualAndCurrentCapacityGreaterThanEqualOrderByEnergyCapacityAsc(BatteryCategory type, int systemVoltage, int current);
+    public List<Battery> findByTypeAndVoltageLessThanEqualOrderByEnergyCapacityAsc(BatteryCategory type, int systemVoltage);
 
     Battery findTopByTypeAndVoltageLessThanEqualAndCurrentCapacityLessThanEqualOrderByEnergyCapacityDesc(BatteryCategory type, int sysVolts, int capacity);
 }
