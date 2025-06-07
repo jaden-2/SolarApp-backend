@@ -1,10 +1,12 @@
 package com.jaden_2.solar.backend.services;
 
-import com.jaden_2.solar.backend.DTOs.ArraySpecs;
+
 import com.jaden_2.solar.backend.DTOs.PanelRequest;
+import com.jaden_2.solar.backend.entities.ArraySpecs;
 import com.jaden_2.solar.backend.entities.Configuration;
-import com.jaden_2.solar.backend.entities.Panel;
+
 import com.jaden_2.solar.backend.entities.enums.SWG;
+import com.jaden_2.solar.backend.entities.inventory.Panel;
 import com.jaden_2.solar.backend.repositories.PanelRepo;
 import org.springframework.stereotype.Service;
 

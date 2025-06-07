@@ -1,15 +1,14 @@
 package com.jaden_2.solar.backend.entities;
 
 import com.jaden_2.solar.backend.entities.inventory.Breaker;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@Table(schema = "solar_inventory")
+@Entity
 public class BreakerSpecs {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

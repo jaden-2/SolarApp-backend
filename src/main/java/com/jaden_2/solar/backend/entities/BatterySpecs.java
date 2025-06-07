@@ -1,13 +1,16 @@
-package com.jaden_2.solar.backend.DTOs;
+package com.jaden_2.solar.backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jaden_2.solar.backend.entities.inventory.Battery;
 import com.jaden_2.solar.backend.entities.enums.BatteryCategory;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@Table(schema = "solar_inventory")
+@Entity
 public class BatterySpecs {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

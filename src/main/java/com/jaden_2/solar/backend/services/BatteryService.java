@@ -1,9 +1,10 @@
 package com.jaden_2.solar.backend.services;
 
-import com.jaden_2.solar.backend.DTOs.BatterySpecs;
-import com.jaden_2.solar.backend.entities.Battery;
+
+import com.jaden_2.solar.backend.entities.BatterySpecs;
 import com.jaden_2.solar.backend.entities.Configuration;
 import com.jaden_2.solar.backend.entities.enums.BatteryCategory;
+import com.jaden_2.solar.backend.entities.inventory.Battery;
 import com.jaden_2.solar.backend.repositories.BatteryRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Configuration<T, K>{
-    private T series;
-    private K parallel;
+    private Integer series;
+    private Integer parallel;
+
+    public Integer getTotal(){
+        return series * parallel;
+    }
 }

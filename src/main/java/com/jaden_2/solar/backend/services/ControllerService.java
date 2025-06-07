@@ -1,8 +1,8 @@
 package com.jaden_2.solar.backend.services;
 
-import com.jaden_2.solar.backend.DTOs.ControllerSpecs;
-import com.jaden_2.solar.backend.entities.ChargeController;
 import com.jaden_2.solar.backend.entities.Configuration;
+import com.jaden_2.solar.backend.entities.ControllerSpecs;
+import com.jaden_2.solar.backend.entities.inventory.ChargeController;
 import com.jaden_2.solar.backend.exceptions.ChargeControllerNotFoundException;
 import com.jaden_2.solar.backend.repositories.ChargeControllerRepo;
 import lombok.AllArgsConstructor;

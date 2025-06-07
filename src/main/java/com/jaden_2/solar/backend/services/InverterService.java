@@ -1,8 +1,8 @@
 package com.jaden_2.solar.backend.services;
 
-import com.jaden_2.solar.backend.DTOs.InverterSpecs;
 import com.jaden_2.solar.backend.entities.Configuration;
-import com.jaden_2.solar.backend.entities.Inverter;
+import com.jaden_2.solar.backend.entities.InverterSpecs;
+import com.jaden_2.solar.backend.entities.inventory.Inverter;
 import com.jaden_2.solar.backend.repositories.InverterRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

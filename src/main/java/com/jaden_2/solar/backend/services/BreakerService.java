@@ -1,7 +1,8 @@
 package com.jaden_2.solar.backend.services;
 
-import com.jaden_2.solar.backend.DTOs.BreakerSpecs;
-import com.jaden_2.solar.backend.entities.Breaker;
+
+import com.jaden_2.solar.backend.entities.BreakerSpecs;
+import com.jaden_2.solar.backend.entities.inventory.Breaker;
 import com.jaden_2.solar.backend.repositories.BreakerRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

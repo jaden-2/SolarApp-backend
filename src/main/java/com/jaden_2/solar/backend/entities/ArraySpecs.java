@@ -6,10 +6,7 @@ import com.jaden_2.solar.backend.DTOs.TechSheet;
 import com.jaden_2.solar.backend.DTOs.WireSpec;
 import com.jaden_2.solar.backend.entities.inventory.Panel;
 import com.jaden_2.solar.backend.entities.enums.SWG;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +18,8 @@ import lombok.NoArgsConstructor;
  * @author Sylvanus Jedidiah*/
 @Data
 @NoArgsConstructor
+@Table(schema = "solar_inventory")
+@Entity
 public class ArraySpecs {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

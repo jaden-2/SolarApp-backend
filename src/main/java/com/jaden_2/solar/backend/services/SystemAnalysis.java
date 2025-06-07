@@ -1,8 +1,8 @@
 package com.jaden_2.solar.backend.services;
 
 import com.jaden_2.solar.backend.DTOs.*;
-import com.jaden_2.solar.backend.entities.Configuration;
-import com.jaden_2.solar.backend.entities.Panel;
+import com.jaden_2.solar.backend.entities.*;
+import com.jaden_2.solar.backend.entities.inventory.Panel;
 import com.jaden_2.solar.backend.entities.enums.BatteryCategory;
 import com.jaden_2.solar.backend.entities.enums.DcCable;
 import com.jaden_2.solar.backend.entities.enums.SWG;
@@ -23,6 +23,9 @@ public class SystemAnalysis {
     private final ControllerService controllerService;
 
     public SystemReport analyseSystem(EstimatorRequest estimate){
+        //------------------------Dummy data--------------------
+        User creator = new User();
+        //-------------------------end--------------
         double batteryEnergy = estimate.getEnergy() * estimate.getLoadOnBattery();
         BatterySpecs bank = sizeBattery(batteryEnergy, estimate.getDaysOfAutonomy(), estimate.getSystemVolt(), estimate.getBatteryType());
         ArraySpecs arraySpecs = sizeSolarArray(estimate.getEnergy(), estimate.getPreferredPanel(), estimate.getPsh(), estimate.getArrayStringLength());
@@ -31,7 +34,7 @@ public class SystemAnalysis {
         BreakerSpecs dcBreaker = sizeDCBreaker(arraySpecs.getElectricalProperties().Imp(), arraySpecs.getConfiguration().getParallel());
         List<WireDetails> wireDetails = sizeWireLenght(arraySpecs);
 
-        return new SystemReport(bank, arraySpecs, dcBreaker, wireDetails, inverterSpecs, controllerSpecs);
+        return new SystemReport(bank, arraySpecs, dcBreaker, wireDetails, inverterSpecs, controllerSpecs, creator);
     }
     /**
      * Returns battery specification that fits user requirement based on what is available in db

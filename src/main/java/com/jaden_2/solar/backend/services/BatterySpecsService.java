@@ -1,4 +1,7 @@
 package com.jaden_2.solar.backend.services;
 
-public class BatterSpecsService {
+import org.springframework.stereotype.Service;
+
+@Service
+public class BatterySpecsService {
 }
