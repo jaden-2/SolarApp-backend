@@ -1,4 +1,4 @@
-package com.jaden_2.solar.backend.entities;
+package com.jaden_2.solar.backend.entities.inventory;
 
 import com.jaden_2.solar.backend.entities.converters.BatteryTypeConverter;
 import com.jaden_2.solar.backend.entities.enums.BatteryCategory;

@@ -1,6 +1,6 @@
 package com.jaden_2.solar.backend.repositories;
 
-import com.jaden_2.solar.backend.entities.Battery;
+import com.jaden_2.solar.backend.entities.inventory.Battery;
 import com.jaden_2.solar.backend.entities.enums.BatteryCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

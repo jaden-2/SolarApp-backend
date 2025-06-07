@@ -1,4 +1,4 @@
-package com.jaden_2.solar.backend.entities;
+package com.jaden_2.solar.backend.entities.inventory;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

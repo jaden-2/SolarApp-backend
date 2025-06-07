@@ -1,6 +1,6 @@
 package com.jaden_2.solar.backend.repositories;
 
-import com.jaden_2.solar.backend.entities.ChargeController;
+import com.jaden_2.solar.backend.entities.inventory.ChargeController;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

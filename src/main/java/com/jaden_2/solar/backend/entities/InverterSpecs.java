@@ -1,7 +1,10 @@
-package com.jaden_2.solar.backend.DTOs;
+package com.jaden_2.solar.backend.entities;
 
-import com.jaden_2.solar.backend.entities.Configuration;
-import com.jaden_2.solar.backend.entities.Inverter;
+import com.jaden_2.solar.backend.entities.inventory.Inverter;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +17,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class InverterSpecs {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Integer id;
+    @OneToMany(mappedBy = "username")
+    private User creatorFor;
+
     private String name;
     private String model;
     private double capacityKva;

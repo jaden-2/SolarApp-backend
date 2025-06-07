@@ -1,9 +1,15 @@
-package com.jaden_2.solar.backend.DTOs;
+package com.jaden_2.solar.backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jaden_2.solar.backend.entities.Configuration;
-import com.jaden_2.solar.backend.entities.Panel;
+import com.jaden_2.solar.backend.DTOs.MechSheet;
+import com.jaden_2.solar.backend.DTOs.TechSheet;
+import com.jaden_2.solar.backend.DTOs.WireSpec;
+import com.jaden_2.solar.backend.entities.inventory.Panel;
 import com.jaden_2.solar.backend.entities.enums.SWG;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +22,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ArraySpecs {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Integer id;
+    @OneToMany(mappedBy = "username")
+    private User creatorFor;
+
     private String brand;
     private String model;
     private MechSheet mechanicalProperties;
