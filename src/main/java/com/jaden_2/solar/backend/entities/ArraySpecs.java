@@ -25,7 +25,7 @@ public class ArraySpecs {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
     @OneToMany(mappedBy = "username")
-    private User creatorFor;
+    private User creator;
 
     private String brand;
     private String model;

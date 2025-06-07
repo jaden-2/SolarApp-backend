@@ -19,7 +19,7 @@ public class ControllerSpecs {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
     @OneToMany(mappedBy = "username")
-    private User creatorFor;
+    private User creator;
 
     private String brand;
     private String model;
@@ -27,6 +27,7 @@ public class ControllerSpecs {
     private int maximumChargeCurrent;
     private int minimumVolts;
     private int maximumVolts;
+
     private double calculatedCapacity;
     private Configuration<Integer, Integer> configuration;
 

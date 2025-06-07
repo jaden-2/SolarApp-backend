@@ -15,20 +15,23 @@ import java.util.List;
 public class InverterSpecsService {
     private final InverterSpecsRepo repo;
 
-    public List<InverterSpecs> getInverterSpecsByUser(User creator){
+    public List<InverterSpecs> getSpecByUser(User creator){
         return repo.findAllByCreator(creator);
     }
+    public InverterSpecs getSpecByUser(int id, User creator){
+        return repo.findByIdAndCreator(id, creator).orElseThrow();
+    }
 
-    public InverterSpecs getInverterSpecsById(Integer id){
+    public InverterSpecs getSpec(Integer id){
         return repo.findById(id).orElseThrow();
     }
 
-    public void createInverterSpecs(InverterSpecs specs){
+    public void createSpec(InverterSpecs specs){
         assert specs!=null: "Cannot create a new inverter that's null";
         repo.save(specs);
     }
 
-    public void updateInverterSpecs(InverterSpecs updatedSpecs, Integer id){
+    public void updateSpec(InverterSpecs updatedSpecs, Integer id){
         InverterSpecs specs = repo.findById(id).orElseThrow();
         specs.setModel(updatedSpecs.getModel());
         specs.setType(updatedSpecs.getType());
@@ -38,14 +41,14 @@ public class InverterSpecsService {
 
         repo.save(specs);
     }
-    public void deleteInverterSpecs(Integer id){
+    public void deleteSpec(Integer id){
         repo.delete(repo.findById(id).orElseThrow());
     }
     /**
      * Compares the capacity of Inverters, can be extended to factor properties
      * @param newInverterSpecs New inverter to contrast with system recommendation
      * @param oldInverterId System recommended inverter specification*/
-    public ComparisonResult compareInverter(InverterSpecs newInverterSpecs, Integer oldInverterId){
+    public ComparisonResult compareSpecs(InverterSpecs newInverterSpecs, Integer oldInverterId){
         InverterSpecs oldInverter = repo.findById(oldInverterId).orElseThrow();
         double calcCap = oldInverter.getCalculatedInverterCapacityKva();
         double newCap = newInverterSpecs.getConfiguration().getTotal() * newInverterSpecs.getCapacityKva();
