@@ -9,6 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class BatterySpecs {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Integer id;
+    @OneToMany(mappedBy = "username")
+    private User creatorFor;
+
     private String brand;
     private Integer batteryCurrentCapacityAh;
     private double batteryVoltage;
