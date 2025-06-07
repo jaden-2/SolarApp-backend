@@ -1,7 +1,7 @@
 package com.jaden_2.solar.backend.DTOs;
 
-import com.jaden_2.solar.backend.entities.Battery;
-import com.jaden_2.solar.backend.entities.Configuration;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jaden_2.solar.backend.entities.inventory.Battery;
 import com.jaden_2.solar.backend.entities.enums.BatteryCategory;
 import lombok.Data;
 import lombok.NoArgsConstructor;
