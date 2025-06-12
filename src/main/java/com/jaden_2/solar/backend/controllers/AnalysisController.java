@@ -1,8 +1,7 @@
 package com.jaden_2.solar.backend.controllers;
 
-import com.jaden_2.solar.backend.DTOs.ArraySpecs;
 import com.jaden_2.solar.backend.DTOs.EstimatorRequest;
-import com.jaden_2.solar.backend.DTOs.SystemReport;
+import com.jaden_2.solar.backend.entities.SystemReport;
 import com.jaden_2.solar.backend.services.SystemAnalysis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

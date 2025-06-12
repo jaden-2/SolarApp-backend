@@ -1,7 +1,6 @@
 package com.jaden_2.solar.backend.DTOs;
 
 import com.jaden_2.solar.backend.entities.enums.BatteryCategory;
-import com.jaden_2.solar.backend.entities.Panel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

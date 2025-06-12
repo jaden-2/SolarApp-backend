@@ -1,8 +1,10 @@
 package com.jaden_2.solar.backend.services;
 
 import com.jaden_2.solar.backend.DTOs.ComparisonResult;
+import com.jaden_2.solar.backend.entities.Configuration;
 import com.jaden_2.solar.backend.entities.InverterSpecs;
-import com.jaden_2.solar.backend.entities.User;
+import com.jaden_2.solar.backend.entities.Creator;
+import com.jaden_2.solar.backend.entities.inventory.Inverter;
 import com.jaden_2.solar.backend.repositories.InverterSpecsRepo;
 import lombok.AllArgsConstructor;
 
@@ -14,32 +16,38 @@ import java.util.List;
 @AllArgsConstructor
 public class InverterSpecsService {
     private final InverterSpecsRepo repo;
+    private final InverterService service;
 
-    public List<InverterSpecs> getSpecByUser(User creator){
+    public List<InverterSpecs> getSpecByUser(Creator creator){
         return repo.findAllByCreator(creator);
     }
-    public InverterSpecs getSpecByUser(int id, User creator){
-        return repo.findByIdAndCreator(id, creator).orElseThrow();
+    public InverterSpecs getSpecByUser(int id, Creator creator){
+        return repo.findByInverterIdAndCreator(id, creator).orElseThrow();
     }
 
     public InverterSpecs getSpec(Integer id){
         return repo.findById(id).orElseThrow();
     }
 
-    public void createSpec(InverterSpecs specs){
+    public InverterSpecs createSpec(Integer id, Configuration config, Double recommendCap){
+        Inverter inverter = service.getInverterById(id);
+
+        return new InverterSpecs(inverter, recommendCap, config);
+    }
+    public void saveSpec(InverterSpecs specs){
         assert specs!=null: "Cannot create a new inverter that's null";
         repo.save(specs);
     }
 
-    public void updateSpec(InverterSpecs updatedSpecs, Integer id){
-        InverterSpecs specs = repo.findById(id).orElseThrow();
-        specs.setModel(updatedSpecs.getModel());
-        specs.setType(updatedSpecs.getType());
-        specs.setCapacityKva(updatedSpecs.getCapacityKva());
-        specs.setConfiguration(updatedSpecs.getConfiguration());
-        specs.setSystemVoltage(updatedSpecs.getSystemVoltage());
+    public InverterSpecs updateSpec(InverterSpecs updatedSpecs, InverterSpecs originalSpecs){
+        originalSpecs.setModel(updatedSpecs.getModel());
+        originalSpecs.setType(updatedSpecs.getType());
+        originalSpecs.setCapacityKva(updatedSpecs.getCapacityKva());
+        originalSpecs.setConfiguration(updatedSpecs.getConfiguration());
+        originalSpecs.setSystemVoltage(updatedSpecs.getSystemVoltage());
 
-        repo.save(specs);
+        repo.save(originalSpecs);
+        return  originalSpecs;
     }
     public void deleteSpec(Integer id){
         repo.delete(repo.findById(id).orElseThrow());

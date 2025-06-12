@@ -1,6 +1,7 @@
 package com.jaden_2.solar.backend.services;
 
 import com.jaden_2.solar.backend.DTOs.*;
+import com.jaden_2.solar.backend.DTOs.sheets.WireDetails;
 import com.jaden_2.solar.backend.entities.*;
 import com.jaden_2.solar.backend.entities.inventory.Panel;
 import com.jaden_2.solar.backend.entities.enums.BatteryCategory;
@@ -24,7 +25,7 @@ public class SystemAnalysis {
 
     public SystemReport analyseSystem(EstimatorRequest estimate){
         //------------------------Dummy data--------------------
-        User creator = new User();
+        Creator creator = new Creator();
         //-------------------------end--------------
         double batteryEnergy = estimate.getEnergy() * estimate.getLoadOnBattery();
         BatterySpecs bank = sizeBattery(batteryEnergy, estimate.getDaysOfAutonomy(), estimate.getSystemVolt(), estimate.getBatteryType());
@@ -63,7 +64,7 @@ public class SystemAnalysis {
      * Returns detailed specification of a charge controller that meets requirement
      * @param panelReq Preferred panel requested by user
      * @param arrayConfig Array configuration determined by system*/
-    public ControllerSpecs sizeController(PanelRequest panelReq, Configuration<Integer, Integer> arrayConfig) {
+    public ControllerSpecs sizeController(PanelRequest panelReq, Configuration arrayConfig) {
         Panel panel = panelService.getPanelByBrandAndPower(panelReq);
         double totalPower = arrayConfig.getSeries() * arrayConfig.getParallel() * panelReq.getPower(); // Solar array power_w in Wp
         double maxVolts = arrayConfig.getSeries() * panel.getVoc();

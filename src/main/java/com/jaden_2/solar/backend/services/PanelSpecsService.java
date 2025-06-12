@@ -1,9 +1,14 @@
 package com.jaden_2.solar.backend.services;
 
 import com.jaden_2.solar.backend.DTOs.ComparisonResult;
+import com.jaden_2.solar.backend.DTOs.PanelRequest;
 import com.jaden_2.solar.backend.entities.ArraySpecs;
-import com.jaden_2.solar.backend.entities.User;
+import com.jaden_2.solar.backend.entities.Configuration;
+import com.jaden_2.solar.backend.entities.Creator;
+import com.jaden_2.solar.backend.entities.enums.SWG;
+import com.jaden_2.solar.backend.entities.inventory.Panel;
 import com.jaden_2.solar.backend.repositories.ArraySpecsRepo;
+import com.jaden_2.solar.backend.repositories.PanelRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,21 +16,27 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class PanelSpecsService {
     private final ArraySpecsRepo repo;
-
+    private final PanelRepo panelRepo;
+    private final WireService wireService;
     public ArraySpecs getSpec(Integer id){
         return repo.findById(id).orElseThrow();
     }
-    public ArraySpecs getSpecByUser(Integer id, User creator){
-        return repo.findByIdAndCreator(id, creator).orElseThrow();
+    public ArraySpecs getSpecByUser(Integer id, Creator creator){
+        return repo.findByArrayIdAndCreator(id, creator).orElseThrow();
     }
 
+    public ArraySpecs createSpec(PanelRequest panelRequest, Configuration configuration, double calcPower){
+        Panel panel = panelRepo.findByBrandAndPower(panelRequest.getBrand(), panelRequest.getPower());
+        double current = configuration.getParallel() * panel.getImp();
+        SWG gauge = wireService.getGaugeByCurrent(current);
+        return new ArraySpecs(panel, configuration, gauge,calcPower);
+    }
 
-    public void createSpec(ArraySpecs spec){
+    public void saveSpec(ArraySpecs spec){
         repo.save(spec);
     }
 
-    public ArraySpecs updateSpec(ArraySpecs updatedArraySpec, Integer id){
-        ArraySpecs spec = repo.findById(id).orElseThrow();
+    public ArraySpecs updateSpec(ArraySpecs updatedArraySpec, ArraySpecs spec){
         spec.setBrand(updatedArraySpec.getBrand());
         spec.setModel(updatedArraySpec.getModel());
         spec.setElectricalProperties(updatedArraySpec.getElectricalProperties());

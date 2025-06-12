@@ -1,8 +1,10 @@
 package com.jaden_2.solar.backend.services;
 
+import com.jaden_2.solar.backend.DTOs.BatteryDTO;
 import com.jaden_2.solar.backend.DTOs.ComparisonResult;
 import com.jaden_2.solar.backend.entities.BatterySpecs;
-import com.jaden_2.solar.backend.entities.User;
+import com.jaden_2.solar.backend.entities.Creator;
+import com.jaden_2.solar.backend.entities.inventory.Battery;
 import com.jaden_2.solar.backend.repositories.BatterySpecsRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,21 +13,26 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class BatterySpecsService {
     private final BatterySpecsRepo repo;
-
+    private final BatteryService service;
     public BatterySpecs getSpec(int id){
         return repo.findById(id).orElseThrow();
     }
-    public BatterySpecs getSpecByUser(int id, User creator){
-        return repo.findByIdAndCreate(id, creator).orElseThrow();
+    public BatterySpecs getSpecByUser(int id, Creator creator){
+        return repo.findByBatteryIdAndCreator(id, creator).orElseThrow();
     }
-    public void createSpec(BatterySpecs spec){
+
+    public BatterySpecs createSpec(BatteryDTO changedBattery, double calcCapacity){
+        Battery battery = service.getBattery(changedBattery.getId());
+        return new BatterySpecs(battery, calcCapacity, changedBattery.getConfig());
+    }
+
+    public void saveSpec(BatterySpecs spec){
         repo.save(spec);
     }
     public void deleteSpec(int id){
         repo.deleteById(id);
     }
-    public BatterySpecs updateSpec(BatterySpecs updatedSpec, Integer id){
-        BatterySpecs spec = repo.findById(id).orElseThrow();
+    public BatterySpecs updateSpec(BatterySpecs updatedSpec, BatterySpecs spec){
         spec.setBatteryType(updatedSpec.getBatteryType());
         spec.setConfiguration(updatedSpec.getConfiguration());
         spec.setBrand(updatedSpec.getBrand());

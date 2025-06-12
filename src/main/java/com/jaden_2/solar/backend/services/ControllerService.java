@@ -27,15 +27,19 @@ public class ControllerService {
         try{
             controller = repo.findTopByMaxChargeCurrentGreaterThanEqualOrderByMaxChargeCurrentAsc(controllerSize)
                     .orElseThrow(ChargeControllerNotFoundException::new);
-            return new ControllerSpecs(controller, controllerSize ,new Configuration<>(1, 1));
+            return new ControllerSpecs(controller, controllerSize ,new Configuration(1, 1));
         }catch (ChargeControllerNotFoundException e){
             controller = getSmallerController(controllerSize);
             int parallel = (int) Math.ceil(controllerSize/controller.getMaxChargeCurrent());
-            return new ControllerSpecs(controller, controllerSize ,new Configuration<>(1, parallel));
+            return new ControllerSpecs(controller, controllerSize ,new Configuration(1, parallel));
         }
     }
 
     public ChargeController getSmallerController(double capacity){
         return repo.findTopByMaxChargeCurrentLessThanEqualOrderByMaxChargeCurrentAsc(capacity);
+    }
+
+    public ChargeController getControllerById(Integer id){
+        return repo.findById(id).orElseThrow();
     }
 }

@@ -26,12 +26,15 @@ public class BatteryService {
             Integer parallel = (int) Math.ceil(capacity/ battery.getCurrentCapacity());
             Integer series = (int) Math.ceil(sysVolts/battery.getVoltage());
 
-            return  new BatterySpecs(battery, capacity, new Configuration<>(series, parallel));
+            return  new BatterySpecs(battery, capacity, new Configuration(series, parallel));
     }
     public Optional<Battery> filterBattery(List<Battery> batteries, double capacity){
         return batteries.stream().min(Comparator.comparingDouble(b->Math.abs( (capacity /b.getCurrentCapacity()) - 1)));
     }
     public List<Battery> getBatteries() {
         return repo.findAll();
+    }
+    public  Battery getBattery(Integer id){
+        return repo.findById(id).orElseThrow();
     }
 }

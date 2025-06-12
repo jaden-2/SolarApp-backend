@@ -17,9 +17,10 @@ import lombok.NoArgsConstructor;
 public class ControllerSpecs {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id;
-    @OneToMany(mappedBy = "username")
-    private User creator;
+    private Integer controllerId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username")
+    private Creator creator;
 
     private String brand;
     private String model;
@@ -29,9 +30,9 @@ public class ControllerSpecs {
     private int maximumVolts;
 
     private double calculatedCapacity;
-    private Configuration<Integer, Integer> configuration;
+    private Configuration configuration;
 
-    public ControllerSpecs(ChargeController controller, double cap,Configuration<Integer, Integer> config){
+    public ControllerSpecs(ChargeController controller, double cap,Configuration config){
         brand = controller.getBrand();
         model = controller.getModel();
         type = controller.getType();

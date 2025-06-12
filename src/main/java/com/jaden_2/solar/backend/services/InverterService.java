@@ -22,12 +22,14 @@ public class InverterService {
         try{
             inverter = repo.findTopBySystemVoltageAndCapacityGreaterThanEqualOrderByCapacityAsc(sysVolts, inverterCapacity)
                     .orElseThrow();
-            return new InverterSpecs(inverter, inverterCapacity, new Configuration<>(1, 1));
+            return new InverterSpecs(inverter, inverterCapacity, new Configuration(1, 1));
         } catch (RuntimeException e) {
             inverter = repo.findTopBySystemVoltageAndCapacityLessThanOrderByCapacityAsc(sysVolts, inverterCapacity);
             int parallel = (int) Math.ceil(inverterCapacity/inverter.getCapacity());
-            return new InverterSpecs(inverter, inverterCapacity, new Configuration<>(1, parallel));
+            return new InverterSpecs(inverter, inverterCapacity, new Configuration(1, parallel));
         }
     }
-
+    public Inverter getInverterById(Integer inverterId){
+        return  repo.findById(inverterId).orElseThrow();
+    }
 }

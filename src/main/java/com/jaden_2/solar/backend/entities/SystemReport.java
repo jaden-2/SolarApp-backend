@@ -1,14 +1,13 @@
 package com.jaden_2.solar.backend.entities;
 
-import com.jaden_2.solar.backend.DTOs.*;
+import com.jaden_2.solar.backend.DTOs.ReportDTO;
+import com.jaden_2.solar.backend.DTOs.sheets.WireDetails;
+import com.jaden_2.solar.backend.entities.converters.WireDetailsTypeConverter;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -20,36 +19,60 @@ import java.util.List;
 public class SystemReport {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
-    private User createdFor;
-    private Date createdAt;
-    private Date updateAt;
+    private Integer reportId;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username", nullable = false)
+    private Creator creator;
+    private LocalDateTime createdAt;
+    private LocalDateTime updateAt;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "batteryId")
     private BatterySpecs batteryBank;
-    @OneToOne(mappedBy = "id", cascade = CascadeType.ALL)
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "arrayId")
     private ArraySpecs solarArray;
-    @OneToOne(mappedBy = "id" , cascade = CascadeType.ALL)
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "breakerId")
     private BreakerSpecs dcBreaker;
+
+    @Convert(converter = WireDetailsTypeConverter.class)
     private List<WireDetails> wireDetails;
-    @OneToOne(mappedBy = "id", cascade = CascadeType.ALL)
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "inverterId")
     private InverterSpecs inverter;
-    @OneToOne(mappedBy = "id" , cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "controllerId")
     private ControllerSpecs chargeController;
 
-    public SystemReport(BatterySpecs bank, ArraySpecs arraySpecs, BreakerSpecs dcBreaker, List<WireDetails> wireDetails, InverterSpecs inverterSpecs, ControllerSpecs controllerSpecs, User creator) {
+    public SystemReport(BatterySpecs bank, ArraySpecs arraySpecs, BreakerSpecs dcBreaker, List<WireDetails> wireDetails, InverterSpecs inverterSpecs, ControllerSpecs controllerSpecs, Creator creator) {
         setBatteryBank(bank);
         setSolarArray(arraySpecs);
         setDcBreaker(dcBreaker);
         setWireDetails(wireDetails);
         setInverter(inverterSpecs);
         setChargeController(controllerSpecs);
-        setCreatedFor(creator);
+        setCreator(creator);
     }
 
     @PrePersist
-    private void setUpdate(){
-        updateAt = new Date(System.currentTimeMillis());
+    private void setCreatedAt(){
+        createdAt = LocalDateTime.now();
+    }
+
+    public SystemReport updateReport(ReportDTO report){
+        setCreatedAt(report.getCreatedAt());
+        setUpdateAt(report.getUpdateAt());
+        setBatteryBank(report.getBatteryBank());
+        setSolarArray(report.getSolarArray());
+        setDcBreaker(report.getDcBreaker());
+        setInverter(report.getInverter());
+        setChargeController(report.getChargeController());
+        setUpdateAt(LocalDateTime.now());
+        return this;
     }
 }

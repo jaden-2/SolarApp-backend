@@ -1,9 +1,9 @@
 package com.jaden_2.solar.backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jaden_2.solar.backend.DTOs.MechSheet;
-import com.jaden_2.solar.backend.DTOs.TechSheet;
-import com.jaden_2.solar.backend.DTOs.WireSpec;
+import com.jaden_2.solar.backend.DTOs.sheets.MechSheet;
+import com.jaden_2.solar.backend.DTOs.sheets.TechSheet;
+import com.jaden_2.solar.backend.DTOs.sheets.WireSpec;
 import com.jaden_2.solar.backend.entities.inventory.Panel;
 import com.jaden_2.solar.backend.entities.enums.SWG;
 import jakarta.persistence.*;
@@ -23,9 +23,11 @@ import lombok.NoArgsConstructor;
 public class ArraySpecs {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id;
-    @OneToMany(mappedBy = "username")
-    private User creator;
+    private Integer arrayId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username")
+    private Creator creator;
 
     private String brand;
     private String model;
@@ -33,10 +35,10 @@ public class ArraySpecs {
     private TechSheet electricalProperties;
     @JsonIgnore
     private WireSpec wireSpecification;
-    private Configuration<Integer, Integer> configuration;
+    private Configuration configuration;
     private Double calculatePanelCapacity;
 
-    public ArraySpecs(Panel panel, Configuration<Integer, Integer> config, SWG gauge, double requirement){
+    public ArraySpecs(Panel panel, Configuration config, SWG gauge, double requirement){
         brand = panel.getBrand();
         model = panel.getModel();
         mechanicalProperties = new MechSheet(panel.getLenght(), panel.getWidth());

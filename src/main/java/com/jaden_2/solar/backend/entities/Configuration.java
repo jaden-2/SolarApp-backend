@@ -1,5 +1,6 @@
 package com.jaden_2.solar.backend.entities;
 
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Configuration<T, K>{
+@Embeddable
+public class Configuration{
     private Integer series;
     private Integer parallel;
 

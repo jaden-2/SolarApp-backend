@@ -15,10 +15,10 @@ import java.util.List;
 @Service
 public class PanelService {
     private final PanelRepo repo;
-    private final WireService wireRepo;
+    private final WireService wireService;
     public PanelService(PanelRepo repo, WireService gaugeRepo){
         this.repo = repo;
-        this.wireRepo = gaugeRepo;
+        this.wireService = gaugeRepo;
     }
 
     public List<Panel> getPanels(){
@@ -43,7 +43,9 @@ public class PanelService {
         int parallel = (int) Math.ceil(numOfPanels/stringLength);
         // Total current from solar array
         double current = parallel * panel.getImp();
-        SWG gauge = wireRepo.getGaugeByCurrent(current);
-        return new ArraySpecs(panel, new Configuration<>(stringLength, parallel), gauge, arrayPower);
+        SWG gauge = wireService.getGaugeByCurrent(current);
+        return new ArraySpecs(panel, new Configuration(stringLength, parallel), gauge, arrayPower);
     }
+
+
 }

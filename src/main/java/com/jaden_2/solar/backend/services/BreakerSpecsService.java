@@ -1,10 +1,8 @@
 package com.jaden_2.solar.backend.services;
 
 import com.jaden_2.solar.backend.DTOs.ComparisonResult;
-import com.jaden_2.solar.backend.entities.ArraySpecs;
 import com.jaden_2.solar.backend.entities.BreakerSpecs;
-import com.jaden_2.solar.backend.entities.User;
-import com.jaden_2.solar.backend.repositories.BreakerRepo;
+import com.jaden_2.solar.backend.entities.Creator;
 import com.jaden_2.solar.backend.repositories.BreakerSpecsRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,23 +15,22 @@ public class BreakerSpecsService {
     public BreakerSpecs getSpec(Integer id){
         return repo.findById(id).orElseThrow();
     }
-    public BreakerSpecs getSpecByUser(int id, User creator){
-        return repo.findByIdAndCreator(id, creator).orElseThrow();
+    public BreakerSpecs getSpecByUser(int id, Creator creator){
+        return repo.findByBreakerIdAndCreator(id, creator).orElseThrow();
     }
 
     public void createSpec(BreakerSpecs spec){
         assert spec!=null: "Cannot create specification for breaker that is null";
         repo.save(spec);
     }
-    public BreakerSpecs updateSpec(BreakerSpecs updatedSpec, Integer id){
-        BreakerSpecs spec = repo.findById(id).orElseThrow();
-        spec.setModel(updatedSpec.getModel());
-        spec.setType(updatedSpec.getType());
-        spec.setCurrent(updatedSpec.getCurrent());
-        spec.setMaximumVoltage(updatedSpec.getMaximumVoltage());
+    public BreakerSpecs updateSpec(BreakerSpecs updatedSpec, BreakerSpecs originalSpec){
+        originalSpec.setModel(updatedSpec.getModel());
+        originalSpec.setType(updatedSpec.getType());
+        originalSpec.setCurrent(updatedSpec.getCurrent());
+        originalSpec.setMaximumVoltage(updatedSpec.getMaximumVoltage());
 
-        repo.save(spec);
-        return spec;
+        repo.save(originalSpec);
+        return originalSpec;
     }
     public void deleteSpec(Integer id){
         repo.deleteById(id);

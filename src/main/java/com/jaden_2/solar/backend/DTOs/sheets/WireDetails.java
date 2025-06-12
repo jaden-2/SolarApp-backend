@@ -1,7 +1,6 @@
-package com.jaden_2.solar.backend.DTOs;
+package com.jaden_2.solar.backend.DTOs.sheets;
 
-import com.jaden_2.solar.backend.entities.enums.DcCable;
-import com.jaden_2.solar.backend.entities.enums.SWG;
+import jakarta.persistence.Embeddable;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 

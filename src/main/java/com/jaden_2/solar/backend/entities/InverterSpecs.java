@@ -18,9 +18,11 @@ import lombok.NoArgsConstructor;
 public class InverterSpecs {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id;
-    @OneToMany(mappedBy = "username")
-    private User creator;
+    private Integer inverterId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username")
+    private Creator creator;
 
     // These properties mock the inverters in inventory
     private String name;
@@ -30,9 +32,9 @@ public class InverterSpecs {
     private String type = "Sine";
     //---------------------end---------------------
     private Double calculatedInverterCapacityKva;
-    private Configuration<Integer, Integer> configuration;
+    private Configuration configuration;
 
-    public InverterSpecs(Inverter inverter, double recommendation, Configuration<Integer, Integer> config){
+    public InverterSpecs(Inverter inverter, double recommendation, Configuration config){
         this.name= inverter.getName();
         this.model = inverter.getModel();
         this.capacityKva = inverter.getCapacity();

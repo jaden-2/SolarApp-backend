@@ -12,9 +12,10 @@ import lombok.NoArgsConstructor;
 public class BreakerSpecs {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id;
-    @OneToMany(mappedBy = "username")
-    private User creator;
+    private Integer breakerId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username")
+    private Creator creator;
 
     private String model;
     private Integer current;
