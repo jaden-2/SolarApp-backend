@@ -15,7 +15,7 @@ public class BatterySpecs {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer batteryId;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username")
+    @JoinColumn(referencedColumnName = "username", name = "creator")
     private Creator creator;
 
     private String brand;

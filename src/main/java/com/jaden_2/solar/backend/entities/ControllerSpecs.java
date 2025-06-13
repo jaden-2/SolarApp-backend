@@ -19,7 +19,7 @@ public class ControllerSpecs {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer controllerId;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username")
+    @JoinColumn(referencedColumnName = "username", name = "creator")
     private Creator creator;
 
     private String brand;

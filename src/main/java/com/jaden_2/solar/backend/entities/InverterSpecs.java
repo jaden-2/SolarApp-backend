@@ -21,7 +21,7 @@ public class InverterSpecs {
     private Integer inverterId;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username")
+    @JoinColumn(referencedColumnName = "username", name = "creator")
     private Creator creator;
 
     // These properties mock the inverters in inventory

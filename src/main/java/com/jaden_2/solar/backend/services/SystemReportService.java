@@ -34,6 +34,11 @@ public class SystemReportService {
         return repo.findByCreator(creator);
     }
 
+    public ReportDTO createAndSaveReport(EstimatorRequest request, Creator creator){
+        SystemReport report = analyser.analyseSystem(request, creator);
+        repo.save(report);
+        return new ReportDTO(report);
+    }
     public void saveReport(SystemReport report){
         repo.save(report);
         reportRepo.save(new Reports(report));

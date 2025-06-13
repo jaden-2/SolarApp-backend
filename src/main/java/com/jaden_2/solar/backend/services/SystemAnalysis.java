@@ -23,10 +23,8 @@ public class SystemAnalysis {
     private final InverterService inverterService;
     private final ControllerService controllerService;
 
-    public SystemReport analyseSystem(EstimatorRequest estimate){
-        //------------------------Dummy data--------------------
-        Creator creator = new Creator();
-        //-------------------------end--------------
+    public SystemReport analyseSystem(EstimatorRequest estimate, Creator creator){
+
         double batteryEnergy = estimate.getEnergy() * estimate.getLoadOnBattery();
         BatterySpecs bank = sizeBattery(batteryEnergy, estimate.getDaysOfAutonomy(), estimate.getSystemVolt(), estimate.getBatteryType());
         ArraySpecs arraySpecs = sizeSolarArray(estimate.getEnergy(), estimate.getPreferredPanel(), estimate.getPsh(), estimate.getArrayStringLength());

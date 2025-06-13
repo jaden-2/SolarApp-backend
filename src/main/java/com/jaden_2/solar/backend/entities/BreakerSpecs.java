@@ -14,7 +14,7 @@ public class BreakerSpecs {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer breakerId;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username")
+    @JoinColumn(referencedColumnName = "username", name = "creator")
     private Creator creator;
 
     private String model;

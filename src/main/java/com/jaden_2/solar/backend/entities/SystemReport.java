@@ -22,31 +22,31 @@ public class SystemReport {
     private Integer reportId;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username", nullable = false)
+    @JoinColumn(referencedColumnName = "username", name = "creator", nullable = false)
     private Creator creator;
     private LocalDateTime createdAt;
     private LocalDateTime updateAt;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "batteryId")
+    @JoinColumn(referencedColumnName = "batteryId", name = "batteryBank")
     private BatterySpecs batteryBank;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "arrayId")
+    @JoinColumn(referencedColumnName = "arrayId", name = "solarArray")
     private ArraySpecs solarArray;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "breakerId")
+    @JoinColumn(referencedColumnName = "breakerId", name = "dcBreaker")
     private BreakerSpecs dcBreaker;
 
     @Convert(converter = WireDetailsTypeConverter.class)
     private List<WireDetails> wireDetails;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "inverterId")
+    @JoinColumn(referencedColumnName = "inverterId", name = "inverter")
     private InverterSpecs inverter;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "controllerId")
+    @JoinColumn(referencedColumnName = "controllerId", name = "controller")
     private ControllerSpecs chargeController;
 
     public SystemReport(BatterySpecs bank, ArraySpecs arraySpecs, BreakerSpecs dcBreaker, List<WireDetails> wireDetails, InverterSpecs inverterSpecs, ControllerSpecs controllerSpecs, Creator creator) {

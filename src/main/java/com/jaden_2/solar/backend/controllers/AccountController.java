@@ -1,0 +1,41 @@
+package com.jaden_2.solar.backend.controllers;
+
+import com.jaden_2.solar.backend.DTOs.CreatorRequest;
+import com.jaden_2.solar.backend.exceptions.CredentialsUpdatedException;
+import com.jaden_2.solar.backend.repositories.CreatorRepo;
+import com.jaden_2.solar.backend.services.CreatorService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/account")
+public class AccountController {
+    @Autowired
+    private CreatorService service;
+
+    @PostMapping("/sign-up")
+    public ResponseEntity<String> createAccount(@Valid @RequestBody CreatorRequest payload){
+        service.createUser(payload);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<String> updateAccount(@Valid @RequestBody CreatorRequest payload, @AuthenticationPrincipal UserDetails principal){
+        try{
+            service.updateUser(payload, principal);
+            return ResponseEntity.ok("Account updated");
+        }catch (CredentialsUpdatedException e){
+            return ResponseEntity.ok(e.getMessage());
+        }
+    }
+
+    public ResponseEntity<Void> deleteAccount(@AuthenticationPrincipal UserDetails principal){
+        service.deleteUser(principal);
+        return ResponseEntity.accepted().build();
+    }
+}

@@ -1,9 +1,9 @@
 package com.jaden_2.solar.backend.jwt;
 
 
-import com.jaden_2.solar.backend.services.AppUserDetailsService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,11 +16,15 @@ import java.util.Date;
 
 @Service
 public class JwtUtil {
-    @Value(value = "security.secret.key")
-    private String token="935c45c2-d15e-4272-a08d-01f4f278b8f5";
-    SecretKey secretKey = Keys.hmacShaKeyFor(token.getBytes(StandardCharsets.UTF_8));
+    @Value("${jwt.secret}")
+    private String token;
+    SecretKey secretKey;
     static int jwtExpiration = 1000*60*10;
 
+    @PostConstruct
+    public void setSecretKey(){
+        secretKey = Keys.hmacShaKeyFor(token.getBytes(StandardCharsets.UTF_8));
+    }
     public String generateToken(UserDetails user){
         return Jwts.builder()
                 .subject(user.getUsername())

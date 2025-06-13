@@ -26,7 +26,7 @@ public class ArraySpecs {
     private Integer arrayId;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username")
+    @JoinColumn(referencedColumnName = "username", name = "creator")
     private Creator creator;
 
     private String brand;

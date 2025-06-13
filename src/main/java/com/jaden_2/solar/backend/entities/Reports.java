@@ -15,7 +15,7 @@ public class Reports {
     private Integer id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "reportId", nullable = false)
+    @JoinColumn(referencedColumnName = "reportId", name = "systemReport", nullable = false)
     private SystemReport reportId;
     @Convert(converter = ReportTypeConverter.class)
     private SystemReport report;
