@@ -5,9 +5,11 @@ import com.jaden_2.solar.backend.jwt.JwtUtil;
 import com.jaden_2.solar.backend.jwt.JwtValidationFilter;
 import com.jaden_2.solar.backend.services.AppUserDetailsService;
 import com.zaxxer.hikari.HikariDataSource;
+import io.swagger.v3.oas.models.PathItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -41,7 +43,10 @@ public class SecurityConfig {
         JwtValidationFilter validationFilter = new JwtValidationFilter(jwtUtil, userDetailsService);
         return http
                 .authorizeHttpRequests((request)->{
-            request.anyRequest().permitAll();
+            request.requestMatchers(HttpMethod.GET, "/resources/*").permitAll();
+            request.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
+            request.requestMatchers(HttpMethod.POST, "/account/signup").permitAll();
+            request.anyRequest().authenticated();
         })
                 .formLogin(FormLoginConfigurer::disable)
                 .httpBasic(HttpBasicConfigurer::disable)

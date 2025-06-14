@@ -4,10 +4,15 @@ import com.jaden_2.solar.backend.DTOs.ReportDTO;
 import com.jaden_2.solar.backend.DTOs.sheets.WireDetails;
 import com.jaden_2.solar.backend.entities.converters.WireDetailsTypeConverter;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -21,11 +26,21 @@ public class SystemReport {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer reportId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "energy_wh", referencedColumnName = "energy_wh", nullable = false)
+    @JoinColumn(name = "load_w", referencedColumnName = "load_w", nullable = false)
+    @JoinColumn(name = "psh", referencedColumnName = "psh", nullable = false)
+    @JoinColumn(name = "sysVolts", referencedColumnName = "systemVolts", nullable = false)
+    @JoinColumn(name = "panelBrand", referencedColumnName = "brand", nullable = false)
+    @JoinColumn(name = "panelPower", referencedColumnName = "power", nullable = false)
+    @JoinColumn(name = "arraySeries", referencedColumnName = "arraySeriesLength", nullable = false)
+    @JoinColumn(name = "batteryType", referencedColumnName = "batteryType", nullable = false)
+    private Request request;
+    @ManyToOne
     @JoinColumn(referencedColumnName = "username", name = "creator", nullable = false)
     private Creator creator;
-    private LocalDateTime createdAt;
-    private LocalDateTime updateAt;
+    private ZonedDateTime createdAt;
+    private ZonedDateTime updateAt;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "batteryId", name = "batteryBank")
@@ -40,6 +55,8 @@ public class SystemReport {
     private BreakerSpecs dcBreaker;
 
     @Convert(converter = WireDetailsTypeConverter.class)
+    @Column(columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
     private List<WireDetails> wireDetails;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -49,7 +66,7 @@ public class SystemReport {
     @JoinColumn(referencedColumnName = "controllerId", name = "controller")
     private ControllerSpecs chargeController;
 
-    public SystemReport(BatterySpecs bank, ArraySpecs arraySpecs, BreakerSpecs dcBreaker, List<WireDetails> wireDetails, InverterSpecs inverterSpecs, ControllerSpecs controllerSpecs, Creator creator) {
+    public SystemReport(BatterySpecs bank, ArraySpecs arraySpecs, BreakerSpecs dcBreaker, List<WireDetails> wireDetails, InverterSpecs inverterSpecs, ControllerSpecs controllerSpecs, Creator creator, Request request) {
         setBatteryBank(bank);
         setSolarArray(arraySpecs);
         setDcBreaker(dcBreaker);
@@ -57,11 +74,12 @@ public class SystemReport {
         setInverter(inverterSpecs);
         setChargeController(controllerSpecs);
         setCreator(creator);
+        setRequest(request);
     }
 
     @PrePersist
     private void setCreatedAt(){
-        createdAt = LocalDateTime.now();
+        createdAt = ZonedDateTime.now(ZoneId.of("Etc/UTC"));
     }
 
     public SystemReport updateReport(ReportDTO report){
@@ -72,7 +90,7 @@ public class SystemReport {
         setDcBreaker(report.getDcBreaker());
         setInverter(report.getInverter());
         setChargeController(report.getChargeController());
-        setUpdateAt(LocalDateTime.now());
+        setUpdateAt(ZonedDateTime.now(ZoneId.systemDefault()));
         return this;
     }
 }

@@ -1,5 +1,6 @@
 package com.jaden_2.solar.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jaden_2.solar.backend.entities.inventory.ChargeController;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -18,8 +19,9 @@ public class ControllerSpecs {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer controllerId;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "username", name = "creator")
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "username", name = "creator", nullable = false)
+    @JsonIgnore
     private Creator creator;
 
     private String brand;

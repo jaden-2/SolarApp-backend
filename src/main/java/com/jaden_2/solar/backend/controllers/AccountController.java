@@ -18,7 +18,7 @@ public class AccountController {
     @Autowired
     private CreatorService service;
 
-    @PostMapping("/sign-up")
+    @PostMapping("/signup")
     public ResponseEntity<String> createAccount(@Valid @RequestBody CreatorRequest payload){
         service.createUser(payload);
         return ResponseEntity.noContent().build();

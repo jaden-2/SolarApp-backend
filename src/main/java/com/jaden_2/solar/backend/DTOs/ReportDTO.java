@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 @Data
 public class ReportDTO {
@@ -32,8 +33,8 @@ public class ReportDTO {
     private ControllerSpecs chargeController;
 
     @PastOrPresent
-    private LocalDateTime createdAt;
-    private LocalDateTime updateAt;
+    private ZonedDateTime createdAt;
+    private ZonedDateTime updateAt;
 
     public ReportDTO(SystemReport report){
         setReportId(report.getReportId());

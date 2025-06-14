@@ -25,8 +25,9 @@ public class ArraySpecs {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer arrayId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "username", name = "creator")
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "username", name = "creator", nullable = false)
+    @JsonIgnore
     private Creator creator;
 
     private String brand;
@@ -46,6 +47,5 @@ public class ArraySpecs {
         electricalProperties = new TechSheet(panel.getPower(), panel.getVmp(), panel.getType(), panel.getImp(), panel.getIsc(), panel.getVoc());
         configuration = config;
         calculatePanelCapacity = requirement;
-
     }
 }

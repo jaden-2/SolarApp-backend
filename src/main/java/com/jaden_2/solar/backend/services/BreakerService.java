@@ -4,8 +4,11 @@ package com.jaden_2.solar.backend.services;
 import com.jaden_2.solar.backend.entities.BreakerSpecs;
 import com.jaden_2.solar.backend.entities.inventory.Breaker;
 import com.jaden_2.solar.backend.repositories.BreakerRepo;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -20,5 +23,11 @@ public class BreakerService {
         } catch (RuntimeException e) {
             return new BreakerSpecs(capacity);
         }
+    }
+    public List<Breaker> getBreakers(){
+        return repo.findAll();
+    }
+    public Breaker getBreaker(Integer breakerId) throws EntityNotFoundException{
+        return  repo.findById(breakerId).orElseThrow(()-> new EntityNotFoundException("Invalid breaker ID"));
     }
 }

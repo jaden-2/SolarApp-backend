@@ -18,7 +18,7 @@ public interface BatteryRepo extends JpaRepository<Battery, Integer> {
      * @return Optional Battery*/
     public Optional<Battery> findTopByTypeAndVoltageLessThanEqualOrderByCurrentCapacityDesc(BatteryCategory type, int systemVoltage);
     /**
-     * Fetches battery from db that is withing the range of system voltage and matches battery type. Ordering by energy storage
+     * Fetches battery from db that is withing the range of system voltage and matches battery type. Ordering by energy_wh storage
      * capacity to get the largest battery for project
      *
      * @param type          Type of battery requested

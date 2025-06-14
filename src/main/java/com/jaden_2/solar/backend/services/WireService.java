@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class WireService {
     public SWG getGaugeByCurrent(double current){
-        return SWG.findByCurrent(current).orElseThrow(()->new WireGaugeNotFoundException("Wire gauge not available"));
+        return SWG.findByCurrent(current).orElseThrow(()->new WireGaugeNotFoundException("Wire gauge not available for " + current));
     }
 }

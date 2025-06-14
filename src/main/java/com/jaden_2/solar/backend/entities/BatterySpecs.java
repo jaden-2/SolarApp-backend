@@ -1,5 +1,6 @@
 package com.jaden_2.solar.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jaden_2.solar.backend.entities.inventory.Battery;
 import com.jaden_2.solar.backend.entities.enums.BatteryCategory;
 import jakarta.persistence.*;
@@ -14,8 +15,9 @@ public class BatterySpecs {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer batteryId;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "username", name = "creator")
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "username", name = "creator", nullable = false)
+    @JsonIgnore
     private Creator creator;
 
     private String brand;

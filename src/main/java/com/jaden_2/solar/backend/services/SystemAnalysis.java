@@ -24,22 +24,26 @@ public class SystemAnalysis {
     private final ControllerService controllerService;
 
     public SystemReport analyseSystem(EstimatorRequest estimate, Creator creator){
-
-        double batteryEnergy = estimate.getEnergy() * estimate.getLoadOnBattery();
-        BatterySpecs bank = sizeBattery(batteryEnergy, estimate.getDaysOfAutonomy(), estimate.getSystemVolt(), estimate.getBatteryType());
-        ArraySpecs arraySpecs = sizeSolarArray(estimate.getEnergy(), estimate.getPreferredPanel(), estimate.getPsh(), estimate.getArrayStringLength());
+        double batteryEnergy = estimate.getEnergy_wh() * estimate.getLoadOnBattery();
+        BatterySpecs bank = sizeBattery(batteryEnergy, estimate.getDaysOfBackup(), estimate.getSystemVolt(), estimate.getBatteryType());
+        bank.setCreator(creator);
+        ArraySpecs arraySpecs = sizeSolarArray(estimate.getEnergy_wh(), estimate.getPreferredPanel(), estimate.getPsh(), estimate.getArraySeriesLength());
+        arraySpecs.setCreator(creator);
         ControllerSpecs controllerSpecs = sizeController(estimate.getPreferredPanel(), arraySpecs.getConfiguration());
-        InverterSpecs inverterSpecs = sizeInverter(estimate.getLoad(), estimate.getSystemVolt());
+        controllerSpecs.setCreator(creator);
+        InverterSpecs inverterSpecs = sizeInverter(estimate.getLoad_w(), estimate.getSystemVolt());
+        inverterSpecs.setCreator(creator);
         BreakerSpecs dcBreaker = sizeDCBreaker(arraySpecs.getElectricalProperties().Imp(), arraySpecs.getConfiguration().getParallel());
+        dcBreaker.setCreator(creator);
         List<WireDetails> wireDetails = sizeWireLenght(arraySpecs);
-
-        return new SystemReport(bank, arraySpecs, dcBreaker, wireDetails, inverterSpecs, controllerSpecs, creator);
+        Request request = new Request(estimate);
+        return new SystemReport(bank, arraySpecs, dcBreaker, wireDetails, inverterSpecs, controllerSpecs, creator, request);
     }
     /**
      * Returns battery specification that fits user requirement based on what is available in db
-     * @param autonomy Number of days battery can carry load without charge
+     * @param autonomy Number of days battery can carry load_w without charge
      * @param category Type of battery
-     * @param energy Estimated daily energy consumed
+     * @param energy Estimated daily energy_wh consumed
      * @param systemVolts System voltage
      * @return BatterySpecs*/
     public BatterySpecs sizeBattery(double energy, int autonomy, int systemVolts, BatteryCategory category){
@@ -48,7 +52,7 @@ public class SystemAnalysis {
     }
     /**
      * Returns panel specification that fits users requirement based on user preferred panels size
-     * @param energy Estimated daily energy consumed
+     * @param energy Estimated daily energy_wh consumed
      * @param psh Peak sun hours in location
      * @param panelReq Preferred panel requested by user
      * @param stringLen Preferred connection configuration for series*/

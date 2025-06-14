@@ -5,8 +5,12 @@ import com.jaden_2.solar.backend.entities.ControllerSpecs;
 import com.jaden_2.solar.backend.entities.inventory.ChargeController;
 import com.jaden_2.solar.backend.exceptions.ChargeControllerNotFoundException;
 import com.jaden_2.solar.backend.repositories.ChargeControllerRepo;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.hibernate.action.internal.EntityActionVetoException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -39,7 +43,10 @@ public class ControllerService {
         return repo.findTopByMaxChargeCurrentLessThanEqualOrderByMaxChargeCurrentAsc(capacity);
     }
 
-    public ChargeController getControllerById(Integer id){
-        return repo.findById(id).orElseThrow();
+    public ChargeController getControllerById(Integer id) throws EntityActionVetoException {
+        return repo.findById(id).orElseThrow(()-> new EntityNotFoundException("Invalid charge controller ID"));
+    }
+    public List<ChargeController> getControllers(){
+        return repo.findAll();
     }
 }

@@ -6,6 +6,7 @@ import com.jaden_2.solar.backend.entities.Configuration;
 import com.jaden_2.solar.backend.entities.enums.BatteryCategory;
 import com.jaden_2.solar.backend.entities.inventory.Battery;
 import com.jaden_2.solar.backend.repositories.BatteryRepo;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,7 @@ public class BatteryService {
     public List<Battery> getBatteries() {
         return repo.findAll();
     }
-    public  Battery getBattery(Integer id){
-        return repo.findById(id).orElseThrow();
+    public  Battery getBattery(Integer id) throws EntityNotFoundException{
+        return repo.findById(id).orElseThrow(()->new EntityNotFoundException("Invalid batteryId"));
     }
 }

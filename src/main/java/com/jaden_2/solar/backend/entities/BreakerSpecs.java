@@ -1,5 +1,6 @@
 package com.jaden_2.solar.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jaden_2.solar.backend.entities.inventory.Breaker;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -13,8 +14,9 @@ public class BreakerSpecs {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer breakerId;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "username", name = "creator")
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "username", name = "creator", nullable = false)
+    @JsonIgnore
     private Creator creator;
 
     private String model;

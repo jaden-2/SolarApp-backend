@@ -23,9 +23,9 @@ public class SystemEstimator {
 
 
     /**
-    * Estimates the battery capacity required to store energy for number of days of autonomy
-    * @param energy Estimated daily energy consumption
-    * @param daysOfAutonomy Number of days battery can carry load without charge
+    * Estimates the battery capacity required to store energy_wh for number of days of autonomy
+    * @param energy Estimated daily energy_wh consumption
+    * @param daysOfAutonomy Number of days battery can carry load_w without charge
     * @param sysVolt system voltage [12, 24, 36, 48]
     * @param type Battery type [lithium, tubular, etc.]
     * @return battery capacity in Amps Hour*/
@@ -36,7 +36,7 @@ public class SystemEstimator {
 
     /**
      * Estimates the size of solar array, returns solar array size in Watts panel
-     * @param energy Total daily energy consumption
+     * @param energy Total daily energy_wh consumption
      * @param psh Peak sun hour
      * @param type Type of solar panel
      * @return Wp*/
@@ -77,7 +77,7 @@ public class SystemEstimator {
         return (arrayPower/acVolts) * breakerFOS;
     }
     /**
-     * Estimates the size of the inverter to carry load
+     * Estimates the size of the inverter to carry load_w
      * @param load Total power_w drawn by appliances
      * @return Capacity of inverter in volts-amps (va)*/
     public static double estimateInverter(double load){

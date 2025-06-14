@@ -4,8 +4,11 @@ import com.jaden_2.solar.backend.entities.Configuration;
 import com.jaden_2.solar.backend.entities.InverterSpecs;
 import com.jaden_2.solar.backend.entities.inventory.Inverter;
 import com.jaden_2.solar.backend.repositories.InverterRepo;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -29,7 +32,10 @@ public class InverterService {
             return new InverterSpecs(inverter, inverterCapacity, new Configuration(1, parallel));
         }
     }
-    public Inverter getInverterById(Integer inverterId){
-        return  repo.findById(inverterId).orElseThrow();
+    public Inverter getInverterById(Integer inverterId) throws EntityNotFoundException {
+        return  repo.findById(inverterId).orElseThrow(()-> new EntityNotFoundException("Invalid inverterId"));
+    }
+    public List<Inverter> getInverters(){
+        return repo.findAll();
     }
 }

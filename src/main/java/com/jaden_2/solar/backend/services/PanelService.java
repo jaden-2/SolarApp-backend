@@ -8,6 +8,7 @@ import com.jaden_2.solar.backend.entities.Configuration;
 import com.jaden_2.solar.backend.entities.enums.SWG;
 import com.jaden_2.solar.backend.entities.inventory.Panel;
 import com.jaden_2.solar.backend.repositories.PanelRepo;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +24,9 @@ public class PanelService {
 
     public List<Panel> getPanels(){
         return repo.findAll();
+    }
+    public Panel getPanel(Integer id) throws EntityNotFoundException{
+        return repo.findById(id).orElseThrow(()-> new EntityNotFoundException("Invalid solar panel ID"));
     }
     /**
      * Returns the solar panel user requests for

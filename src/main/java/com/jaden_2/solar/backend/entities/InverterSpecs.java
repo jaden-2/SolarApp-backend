@@ -1,5 +1,6 @@
 package com.jaden_2.solar.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jaden_2.solar.backend.entities.inventory.Inverter;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -20,8 +21,9 @@ public class InverterSpecs {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer inverterId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "username", name = "creator")
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "username", name = "creator", nullable = false)
+    @JsonIgnore
     private Creator creator;
 
     // These properties mock the inverters in inventory

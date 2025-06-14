@@ -33,7 +33,9 @@ public class CreatorService {
         });
         return new CreatorResponse(details.getUsername(), roles);
     }
-
+    public Creator getUserByUsername(String username){
+        return repo.findById(username).orElseThrow();
+    }
     public void createUser(@Valid CreatorRequest request){
         RoleConverter converter = new RoleConverter();
         Creator user = new Creator(request.getUsername(), encoder.encode(request.getPassword()), Roles.valueOf(request.getRole().toUpperCase()));
