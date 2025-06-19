@@ -4,17 +4,27 @@ import com.jaden_2.solar.backend.DTOs.*;
 import com.jaden_2.solar.backend.entities.Creator;
 import com.jaden_2.solar.backend.services.SystemAnalysis;
 import com.jaden_2.solar.backend.services.SystemReportService;
+import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
-import java.util.List;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("/reports")
@@ -24,6 +34,8 @@ public class SystemReportController {
     SystemAnalysis analysis;
     @Autowired
     SystemReportService service;
+    @Autowired
+    TemplateEngine engine;
 
     @GetMapping
     public ResponseEntity<?> getReports(@AuthenticationPrincipal UserDetails userDetails){
@@ -59,6 +71,29 @@ public class SystemReportController {
         }catch (EntityNotFoundException e){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
         }
+    }
+
+    @GetMapping("/{reportId}/pdf")
+    public void generatePdfReport(HttpServletResponse response, @PathVariable("reportId") Integer reportId) throws RuntimeException, IOException {
+        ReportDTO report = service.getReport(reportId);
+        Context context = new Context();
+        context.setVariable("report", report);
+        context.setVariable("createdAt", report.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm z")));
+        context.setVariable("year", report.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy")));
+        String htmlContent = engine.process("report-template", context);
+
+        response.setStatus(HttpStatus.OK.value());
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=report_"+reportId+".pdf");
+        try(OutputStream os = response.getOutputStream()){
+            PdfRendererBuilder renderer = new PdfRendererBuilder();
+            renderer.useFastMode();
+            renderer.withHtmlContent(htmlContent, null);
+
+            renderer.toStream(os);
+            renderer.run();
+        }
+
     }
     @PostMapping("/generate")
     public ResponseEntity<?> generateReport (@Valid @RequestBody EstimatorRequest estimate, @AuthenticationPrincipal UserDetails authUser){
