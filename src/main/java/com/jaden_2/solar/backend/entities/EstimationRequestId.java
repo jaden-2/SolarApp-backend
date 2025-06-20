@@ -25,6 +25,8 @@ public class EstimationRequestId implements Serializable {
     private Integer arraySeriesLength;
     @Convert(converter = BatteryTypeConverter.class)
     private BatteryCategory batteryType;
+    private Double daysOfBackup;
+
 
     public EstimationRequestId(EstimatorRequest request){
         setEnergy_wh(request.getEnergy_wh());
@@ -34,15 +36,17 @@ public class EstimationRequestId implements Serializable {
         setSelectedPanel(request.getPreferredPanel());
         setArraySeriesLength(request.getArraySeriesLength());
         setBatteryType(request.getBatteryType());
+        setDaysOfBackup(request.getDaysOfBackup());
     }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof EstimationRequestId that)) return false;
-        return Objects.equals(energy_wh, that.energy_wh) && Objects.equals(load_w, that.load_w) && Objects.equals(psh, that.psh) && Objects.equals(systemVolts, that.systemVolts) && Objects.equals(selectedPanel, that.selectedPanel) && Objects.equals(arraySeriesLength, that.arraySeriesLength) && batteryType == that.batteryType;
+        return Objects.equals(energy_wh, that.energy_wh) && Objects.equals(load_w, that.load_w) && Objects.equals(psh, that.psh) && Objects.equals(systemVolts, that.systemVolts) && Objects.equals(daysOfBackup, that.daysOfBackup) && Objects.equals(selectedPanel, that.selectedPanel) && Objects.equals(arraySeriesLength, that.arraySeriesLength) && batteryType == that.batteryType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(energy_wh, load_w, psh, systemVolts, selectedPanel, arraySeriesLength, batteryType);
+        return Objects.hash(energy_wh, load_w, psh, systemVolts, daysOfBackup, selectedPanel, arraySeriesLength, batteryType);
     }
 }

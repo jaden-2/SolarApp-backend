@@ -4,6 +4,7 @@ import com.jaden_2.solar.backend.entities.enums.BatteryCategory;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,12 +15,14 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EstimatorRequest {
+    @Size(max = 500, min = 5)
+    private String title;
     @Positive
     private Double energy_wh; // estimated daily energy_wh consumption
     @Positive
     private Double load_w; // estimated load_w of appliances
     @Positive
-    private int daysOfBackup; // number of days system should last without recharge
+    private double daysOfBackup; // number of days system should last without recharge
     @Positive
     private Double psh; // peak sun hour in area energy_wh per square meter per day
     @Positive

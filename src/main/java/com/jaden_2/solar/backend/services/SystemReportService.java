@@ -55,6 +55,7 @@ public class SystemReportService {
     public ReportDTO createAndSaveReport(EstimatorRequest request, String username) throws EntityNotFoundException{
         Creator creator = service.getUserByUsername(username);
         SystemReport report = analyser.analyseSystem(request, creator);
+        report.setTitle(report.getTitle());
         try {
             saveReport(report);
         } catch (DataIntegrityViolationException e) {

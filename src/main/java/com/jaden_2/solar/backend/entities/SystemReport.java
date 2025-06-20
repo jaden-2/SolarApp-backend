@@ -25,7 +25,7 @@ public class SystemReport {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer reportId;
-
+    private String title;
     @OneToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "energy_wh", referencedColumnName = "energy_wh", nullable = false)
     @JoinColumn(name = "load_w", referencedColumnName = "load_w", nullable = false)
@@ -35,6 +35,7 @@ public class SystemReport {
     @JoinColumn(name = "panelPower", referencedColumnName = "power", nullable = false)
     @JoinColumn(name = "arraySeries", referencedColumnName = "arraySeriesLength", nullable = false)
     @JoinColumn(name = "batteryType", referencedColumnName = "batteryType", nullable = false)
+    @JoinColumn(name = "daysOfBackup", referencedColumnName = "daysOfBackup", nullable = false)
     private Request request;
     @ManyToOne
     @JoinColumn(referencedColumnName = "username", name = "creator", nullable = false)

@@ -46,7 +46,7 @@ public class SystemAnalysis {
      * @param energy Estimated daily energy_wh consumed
      * @param systemVolts System voltage
      * @return BatterySpecs*/
-    public BatterySpecs sizeBattery(double energy, int autonomy, int systemVolts, BatteryCategory category){
+    public BatterySpecs sizeBattery(double energy, double autonomy, int systemVolts, BatteryCategory category){
         double batteryCapacity = SystemEstimator.estimateBattery(energy, autonomy, systemVolts, category);
        return batteryService.evaluateBattery(batteryCapacity, category, systemVolts);
     }

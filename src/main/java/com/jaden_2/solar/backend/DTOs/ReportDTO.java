@@ -5,6 +5,7 @@ import com.jaden_2.solar.backend.entities.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,9 @@ public class ReportDTO {
     @Positive
     @NotNull
     private Integer reportId;
+
+    @Size(min = 5, max = 400)
+    private String title;
     @NotNull
     private BatterySpecs batteryBank;
 
@@ -46,5 +50,6 @@ public class ReportDTO {
         setChargeController(report.getChargeController());
         setCreatedAt(report.getCreatedAt());
         setUpdateAt(report.getUpdateAt());
+        setTitle(report.getTitle());
     }
 }

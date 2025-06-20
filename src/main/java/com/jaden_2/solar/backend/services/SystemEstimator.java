@@ -29,7 +29,7 @@ public class SystemEstimator {
     * @param sysVolt system voltage [12, 24, 36, 48]
     * @param type Battery type [lithium, tubular, etc.]
     * @return battery capacity in Amps Hour*/
-    public static double estimateBattery(double energy, int daysOfAutonomy, int sysVolt, BatteryCategory type){
+    public static double estimateBattery(double energy, double daysOfAutonomy, int sysVolt, BatteryCategory type){
         double batterSize = (energy / (inverterEff * type.getDOB())) * misc * daysOfAutonomy;
         return batterSize/sysVolt;
     }
