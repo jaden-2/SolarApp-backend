@@ -22,10 +22,12 @@ public class ControllerSpecsService {
         return  repo.findByControllerIdAndCreator(id, creator).orElseThrow();
     }
 
-    public ControllerSpecs createSpec(Integer controllerId, Configuration config, Double recommendedCap){
+    public ControllerSpecs createSpec(Integer controllerId, Double recommendedCap){
         ChargeController controller = service.getControllerById(controllerId);
-        return new ControllerSpecs(controller, recommendedCap, config);
+        int parallel = (int) Math.ceil(recommendedCap/controller.getMaxChargeCurrent());
+        return new ControllerSpecs(controller, recommendedCap, new Configuration(1, parallel));
     }
+
     public void saveSpec(ControllerSpecs specs){
         assert specs!=null: "Cannot create charge controller specs of null";
         repo.save(specs);

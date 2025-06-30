@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.time.format.DateTimeFormatter;
@@ -61,7 +62,7 @@ public class SystemReportController {
        }
     }
     @GetMapping("/{reportId}/versions/{version}")
-    public ResponseEntity<?> gerReportVersion(@PathVariable("reportId") Integer reportId, @PathVariable("version") Integer version){
+    public ResponseEntity<?> getReportVersion(@PathVariable("reportId") Integer reportId, @PathVariable("version") Integer version){
         try{
             return ResponseEntity.ok(service.getReportVersion(version));
         }catch (EntityNotFoundException e){
@@ -72,7 +73,14 @@ public class SystemReportController {
     @GetMapping("/{reportId}/pdf")
     public void generatePdfReport(HttpServletResponse response, @PathVariable("reportId") Integer reportId) throws RuntimeException, IOException {
         ReportDTO report = service.getReport(reportId);
+        String gitHubLogo = new File("src/main/resources/static/GitHub_Logo.png").toURI().toString();
+        String gmailLogo = new File("src/main/resources/static/gmail.png").toURI().toString();
+        String linkedInLogo = new File("src/main/resources/static/InBug-Black.png").toURI().toString();
+
         Context context = new Context();
+        context.setVariable("github", gitHubLogo);
+        context.setVariable("gmail", gmailLogo);
+        context.setVariable("linkedIn", linkedInLogo);
         context.setVariable("report", report);
         context.setVariable("createdAt", report.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm z")));
         context.setVariable("year", report.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy")));
@@ -91,6 +99,7 @@ public class SystemReportController {
         }
 
     }
+
     @PostMapping("/generate")
     public ResponseEntity<?> generateReport (@Valid @RequestBody EstimatorRequest estimate, @AuthenticationPrincipal UserDetails authUser){
         try{
@@ -122,6 +131,8 @@ public class SystemReportController {
 
     @PatchMapping("/{reportId}/battery")
     public ResponseEntity<?> patchReportBattery(@Valid @RequestBody BatteryDTO batteryDTO, @PathVariable("reportId") Integer reportId){
+        System.out.println(batteryDTO);
+        System.out.println(reportId);
         try{
             return ResponseEntity.ok(service.patchBatteryReport(batteryDTO, reportId));
         } catch (EntityNotFoundException e) {

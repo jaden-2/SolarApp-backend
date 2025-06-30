@@ -11,6 +11,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Data
@@ -30,6 +31,10 @@ public class Creator {
      * Create a dummy creator object for persisting system reports*/
     public Creator(String username){
         setUsername(username);
+    }
+    public Creator(UserDetails userDetails){
+        username = userDetails.getUsername();
+        password = userDetails.getPassword();
     }
 
 }

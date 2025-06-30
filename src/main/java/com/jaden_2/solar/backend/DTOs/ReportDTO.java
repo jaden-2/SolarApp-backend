@@ -50,6 +50,6 @@ public class ReportDTO {
         setChargeController(report.getChargeController());
         setCreatedAt(report.getCreatedAt());
         setUpdateAt(report.getUpdateAt());
-        setTitle(report.getTitle());
+        setTitle(report.getRequest().getRequestId().getTitle());
     }
 }

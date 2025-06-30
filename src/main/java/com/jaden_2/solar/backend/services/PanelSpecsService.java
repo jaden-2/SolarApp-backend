@@ -25,11 +25,13 @@ public class PanelSpecsService {
         return repo.findByArrayIdAndCreator(id, creator).orElseThrow();
     }
 
-    public ArraySpecs createSpec(PanelRequest panelRequest, Configuration configuration, double calcPower){
+    public ArraySpecs createSpec(PanelRequest panelRequest, int series, double calcPower){
         Panel panel = panelRepo.findByBrandAndPower(panelRequest.getBrand(), panelRequest.getPower());
-        double current = configuration.getParallel() * panel.getImp();
+        double total =  Math.ceil(calcPower/panel.getPower());
+        int parallel = (int) Math.ceil(total/series);
+        double current = parallel * panel.getImp();
         SWG gauge = wireService.getGaugeByCurrent(current);
-        return new ArraySpecs(panel, configuration, gauge,calcPower);
+        return new ArraySpecs(panel, new Configuration(series, parallel), gauge,calcPower);
     }
 
     public void saveSpec(ArraySpecs spec){

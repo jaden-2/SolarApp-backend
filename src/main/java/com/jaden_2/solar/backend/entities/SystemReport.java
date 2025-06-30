@@ -25,8 +25,9 @@ public class SystemReport {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer reportId;
-    private String title;
+
     @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "title", referencedColumnName = "title", nullable = false)
     @JoinColumn(name = "energy_wh", referencedColumnName = "energy_wh", nullable = false)
     @JoinColumn(name = "load_w", referencedColumnName = "load_w", nullable = false)
     @JoinColumn(name = "psh", referencedColumnName = "psh", nullable = false)

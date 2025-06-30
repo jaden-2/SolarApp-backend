@@ -1,11 +1,13 @@
 package com.jaden_2.solar.backend.DTOs;
 
-import com.jaden_2.solar.backend.entities.Configuration;
-import com.jaden_2.solar.backend.entities.inventory.Battery;
-import lombok.Data;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.ToString;
 
-@Data
+@Getter
+@ToString
 public class BatteryDTO {
-    private Integer Id;
-    private Configuration config;
+    @NotNull
+    private Integer id;
+
 }

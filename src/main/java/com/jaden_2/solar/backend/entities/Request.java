@@ -12,9 +12,7 @@ import lombok.NoArgsConstructor;
 public class Request {
     @EmbeddedId
     private EstimationRequestId requestId;
-    private String title;
     public Request( EstimatorRequest request){
         setRequestId(new EstimationRequestId(request));
-        setTitle(request.getTitle());
     }
 }

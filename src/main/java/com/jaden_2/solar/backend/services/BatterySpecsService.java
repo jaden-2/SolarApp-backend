@@ -3,6 +3,7 @@ package com.jaden_2.solar.backend.services;
 import com.jaden_2.solar.backend.DTOs.BatteryDTO;
 import com.jaden_2.solar.backend.DTOs.ComparisonResult;
 import com.jaden_2.solar.backend.entities.BatterySpecs;
+import com.jaden_2.solar.backend.entities.Configuration;
 import com.jaden_2.solar.backend.entities.Creator;
 import com.jaden_2.solar.backend.entities.inventory.Battery;
 import com.jaden_2.solar.backend.repositories.BatterySpecsRepo;
@@ -21,9 +22,11 @@ public class BatterySpecsService {
         return repo.findByBatteryIdAndCreator(id, creator).orElseThrow();
     }
 
-    public BatterySpecs createSpec(BatteryDTO changedBattery, double calcCapacity){
-        Battery battery = service.getBattery(changedBattery.getId());
-        return new BatterySpecs(battery, calcCapacity, changedBattery.getConfig());
+    public BatterySpecs createSpec(int changedBattery, double calcCapacity, int sysVolts){
+        Battery battery = service.getBattery(changedBattery);
+        int series = (int) Math.ceil(sysVolts/ battery.getVoltage());
+        int parallel = (int) Math.ceil(calcCapacity/ battery.getCurrentCapacity());
+        return new BatterySpecs(battery, calcCapacity, new Configuration(series, parallel));
     }
 
     public void saveSpec(BatterySpecs spec){

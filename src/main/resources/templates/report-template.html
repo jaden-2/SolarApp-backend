@@ -59,16 +59,30 @@
     .footer {
       margin-top: 40px;
       font-size: 12px;
-      text-align: center;
       color: #888;
       border-top: 1px solid #ccc;
       padding-top: 10px;
+      text-align: center;
+    }
+    .footer .footer-icons {
+      margin-top: 4px;
+      text-align: center;
+    }
+    .footer .footer-icons a {
+      display: inline-block;
+      margin: 0 5px;
+      vertical-align: middle;
+    }
+    .footer .footer-icons img {
+      width: 40px;
+      height: auto;
+      vertical-align: middle;
     }
   </style>
 </head>
 <body>
-
-  <h1>System Report #[[${report.reportId}]]</h1>
+  <h1>Report Title: #[[${report.title}]]</h1>
+  <h3>System Report #[[${report.reportId}]]</h3>
   <p><strong>Date Created: [[${createdAt}]]  </strong> </p>
   <!-- Battery Bank -->
   <div class="section">
@@ -199,7 +213,20 @@
       </tbody>
     </table>
     <div class="footer">
-      Report generated automatically by SolarReportSys © [[${year}]]
+      <div style="margin-bottom:8px;">
+        Report generated automatically by SolarReportSys © [[${year}]]
+      </div>
+      <div class="footer-icons">
+        <a href="https://www.linkedin.com/in/sylvanus-jedidiah" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <img alt="LinkedIn Logo" th:src="${linkedIn}"/>
+        </a>
+        <a href="https://github.com/jaden-2" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <img alt="GitHub Logo" th:src="${github}"/>
+        </a>
+        <a href="mailto:jedidiahsylvanus@gmail.com" aria-label="Email">
+          <img alt="Email" th:src="${gmail}"/>
+        </a>
+      </div>
     </div>
   </div>
 

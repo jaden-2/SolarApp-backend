@@ -55,7 +55,7 @@ public class SystemReportService {
     public ReportDTO createAndSaveReport(EstimatorRequest request, String username) throws EntityNotFoundException{
         Creator creator = service.getUserByUsername(username);
         SystemReport report = analyser.analyseSystem(request, creator);
-        report.setTitle(report.getTitle());
+
         try {
             saveReport(report);
         } catch (DataIntegrityViolationException e) {
@@ -76,8 +76,8 @@ public class SystemReportService {
     }
     /*
     * A user won't be able to change safety features like DC breaker size
-    * Components are dependent on one another, some patches requires resizing (especially safety components)
-    * 1. When solar array is changes, the size of DC breaker and wire gauges needs to be recalculated.
+    * Components are dependent on one another, some patches require resizing (especially safety components)
+    * 1. When a solar array changes, the size of DC breaker and wire gauges needs to be recalculated.
     * 2. */
     /**
      * Patch report updates segments or components in the full system report
@@ -88,7 +88,7 @@ public class SystemReportService {
     public ReportDTO patchBatteryReport(BatteryDTO rBattery, Integer reportId) throws EntityNotFoundException{
         SystemReport report = repo.findById(reportId).orElseThrow(()->new EntityNotFoundException("Cannot patch a null report, report does not exist"));
         BatterySpecs originalBattery = report.getBatteryBank();
-        BatterySpecs battery = batterySS.createSpec(rBattery, originalBattery.getBatteryCurrentCapacityAh());
+        BatterySpecs battery = batterySS.createSpec(rBattery.getId(), originalBattery.getBatteryCurrentCapacityAh(), report.getRequest().getRequestId().getSystemVolts());
         report.setBatteryBank(batterySS.updateSpec(battery, originalBattery));
         return new ReportDTO(report);
     }
@@ -101,8 +101,8 @@ public class SystemReportService {
         ArraySpecs originalArray = report.getSolarArray();
 
         //Re-sizing dependent components
-        // Based on changed panel and configuration, system automatically generates a new array spec
-        ArraySpecs arraySpecs = panelSS.createSpec(updatedArray.getPanel(), updatedArray.getConfig(), originalArray.getCalculatePanelCapacity());
+        // Based on a changed panel and configuration, the system automatically generates a new array spec
+        ArraySpecs arraySpecs = panelSS.createSpec(updatedArray.getPanel(), updatedArray.getSeries(), originalArray.getCalculatePanelCapacity());
         BreakerSpecs breaker = analyser.sizeDCBreaker(arraySpecs.getElectricalProperties().Isc(), arraySpecs.getConfiguration().getParallel());
         var updatedBreaker = breakerSS.updateSpec(breaker, report.getDcBreaker()); // updates the DB breaker table;
         //------------------end----------------
@@ -122,7 +122,7 @@ public class SystemReportService {
         // extract the initial specification
         ControllerSpecs originalController = report.getChargeController();
         // Using the DTO construct a template specification sheet
-        ControllerSpecs controllerSpecs = controllerSS.createSpec(controllerDTO.id(), controllerDTO.config(), originalController.getCalculatedCapacity());
+        ControllerSpecs controllerSpecs = controllerSS.createSpec(controllerDTO.id(), originalController.getCalculatedCapacity());
         // Using the template, update the original specification and save to db returning a copy of what's stored in db
         ControllerSpecs updatedSpec = controllerSS.updateSpec(controllerSpecs, originalController);
         // Without having to fetch the updated report from db, update the report with changed value and return
@@ -134,7 +134,7 @@ public class SystemReportService {
     public ReportDTO patchInverterReport(@Valid InverterDTO inverter, Integer reportId) throws EntityNotFoundException{
         SystemReport report = repo.findById(reportId).orElseThrow(()-> new EntityNotFoundException("Cannot patch a null report, report does not exist"));
         InverterSpecs originalInverter = report.getInverter();
-        InverterSpecs updateTemplate = inverterSS.createSpec(inverter.id(), inverter.config(), originalInverter.getCalculatedInverterCapacityKva());
+        InverterSpecs updateTemplate = inverterSS.createSpec(inverter.id(), originalInverter.getCalculatedInverterCapacityKva(), report.getRequest().getRequestId().getSystemVolts());
         var updatedInverter = inverterSS.updateSpec(updateTemplate, originalInverter);
         report.setInverter(updatedInverter);
         return new ReportDTO(report);

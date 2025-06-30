@@ -21,6 +21,7 @@ public class AccountController {
     @PostMapping("/signup")
     public ResponseEntity<String> createAccount(@Valid @RequestBody CreatorRequest payload){
         service.createUser(payload);
+
         return ResponseEntity.noContent().build();
     }
 

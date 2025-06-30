@@ -29,10 +29,11 @@ public class InverterSpecsService {
         return repo.findById(id).orElseThrow();
     }
 
-    public InverterSpecs createSpec(Integer id, Configuration config, Double recommendCap){
+    public InverterSpecs createSpec(Integer id, Double recommendCap, int sysVolts){
         Inverter inverter = service.getInverterById(id);
-
-        return new InverterSpecs(inverter, recommendCap, config);
+        int parallel = (int) Math.ceil(recommendCap/inverter.getCapacity());
+        int series = (sysVolts/ inverter.getSystemVoltage());
+        return new InverterSpecs(inverter, recommendCap, new Configuration(1, parallel));
     }
     public void saveSpec(InverterSpecs specs){
         assert specs!=null: "Cannot create a new inverter that's null";

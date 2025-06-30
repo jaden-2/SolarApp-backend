@@ -15,7 +15,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 public class EstimationRequestId implements Serializable {
-
+    private String title;
     private Double energy_wh;
     private Double load_w;
     private Double psh;
@@ -37,6 +37,7 @@ public class EstimationRequestId implements Serializable {
         setArraySeriesLength(request.getArraySeriesLength());
         setBatteryType(request.getBatteryType());
         setDaysOfBackup(request.getDaysOfBackup());
+        setTitle(request.getTitle());
     }
 
     @Override
