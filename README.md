@@ -4,7 +4,6 @@
 ```
 project-root/
 ├── README.md
-├── API_DOCUMENTATION.md
 ├── docker-compose.yml
 ├── src/
 └── ...
@@ -17,7 +16,7 @@ project-root/
 ````markdown
 # 🔆 Solar Backend API
 
-This is the backend service for the **Solar Estimation & Recommendation System**, built with **Spring Boot**, **PostgreSQL**, and **Docker**. It allows authenticated users to estimate solar needs, recommend real-world components from a database, generate reports, and export PDFs.
+This is the backend service for the Solar Estimation & Recommendation System, built with Spring Boot, PostgreSQL, and Docker. It allows authenticated users to estimate solar needs, recommend real-world components from a database, generate reports, and export PDFs.
 
 ---
 
@@ -49,13 +48,6 @@ API runs at: `http://localhost:8080`
 
 Swagger Docs: [`/swagger/api-docs`](http://localhost:8080/swagger/api-docs)
 
----
-
-## 📄 API Documentation
-
-See [`API_DOCUMENTATION.md`](./API_DOCUMENTATION.md) for full reference.
-
----
 
 ## 🧾 Environment Variables
 
@@ -163,7 +155,7 @@ MIT License — use freely, attribution appreciated.
 - Swagger UI available for interactive testing (if enabled in prod/dev profile).
 
 ---
-
+````
 ## 👤 Author
 
 **Sylvanus Jedidiah**  
