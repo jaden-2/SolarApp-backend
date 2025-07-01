@@ -4,13 +4,11 @@ import com.jaden_2.solar.backend.DTOs.ReportDTO;
 import com.jaden_2.solar.backend.DTOs.sheets.WireDetails;
 import com.jaden_2.solar.backend.entities.converters.WireDetailsTypeConverter;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -19,7 +17,7 @@ import java.util.List;
  * A full system report */
 @Data
 @NoArgsConstructor
-@Table(schema = "solar_inventory", name = "systemReport")
+@Table(name = "systemReport")
 @Entity
 public class SystemReport {
     @Id

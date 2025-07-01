@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(schema = "solar_inventory")
 public class InverterSpecs {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

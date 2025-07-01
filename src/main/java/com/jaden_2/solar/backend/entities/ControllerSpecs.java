@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
  * @since 2025*/
 @Data
 @NoArgsConstructor
-@Table(schema = "solar_inventory")
 @Entity
 public class ControllerSpecs {
     @Id

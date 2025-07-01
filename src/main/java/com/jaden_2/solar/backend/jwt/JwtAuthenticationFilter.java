@@ -7,7 +7,6 @@ import com.jaden_2.solar.backend.services.CreatorTokenService;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseCookie;
@@ -20,8 +19,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
-import java.time.Duration;
-import java.util.UUID;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final JwtUtil jwtUtil;
@@ -63,7 +60,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         ResponseCookie accessCookie = ResponseCookie.from("AccessToken").value(accessToken)
                                         .path("/")
                                         .maxAge(JwtUtil.ACCESSEXPIRATION)
-                                        .sameSite("Lax")
+                                        .sameSite("None")
                                         .httpOnly(true)
                                         .secure(true)
                                         .build();
@@ -71,7 +68,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         ResponseCookie refreshCookie = ResponseCookie.from("RefreshToken").value(refreshToken)
                                         .path("/auth")
                                         .maxAge(JwtUtil.REFRESHEXPIRATION)
-                                        .sameSite("Lax")
+                                        .sameSite("None")
                                         .httpOnly(true)
                                         .secure(true)
                                         .build();

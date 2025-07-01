@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -37,7 +36,8 @@ public class CreatorService {
         return repo.findById(username).orElseThrow();
     }
     public void createUser(@Valid CreatorRequest request){
-        RoleConverter converter = new RoleConverter();
+        
+        request.setRole("USER");
         Creator user = new Creator(request.getUsername(), encoder.encode(request.getPassword()), Roles.valueOf(request.getRole().toUpperCase()));
         repo.save(user);
     }

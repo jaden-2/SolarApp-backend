@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@Table(schema = "solar_inventory")
 @Entity
 public class BatterySpecs {
     @Id

@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@Table(schema = "solar_inventory")
 @Entity
 public class BreakerSpecs {
     @Id

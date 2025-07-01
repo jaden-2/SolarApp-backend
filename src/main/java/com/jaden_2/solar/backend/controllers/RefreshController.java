@@ -77,14 +77,14 @@ public class RefreshController {
                     .path("/")
                     .secure(true)
                     .httpOnly(true)
-                    .sameSite("Strict")
+                    .sameSite("None")
                     .build();
             ResponseCookie refreshCookie = ResponseCookie.from("RefreshToken").value(refreshToken)
                     .maxAge(JwtUtil.REFRESHEXPIRATION)
                     .path("/auth")
                     .secure(true)
                     .httpOnly(true)
-                    .sameSite("Strict")
+                    .sameSite("None")
                     .build();
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.SET_COOKIE, accessCookie.toString());
@@ -96,7 +96,6 @@ public class RefreshController {
 
     @GetMapping("/logout")
     ResponseEntity<Void> logout(@AuthenticationPrincipal UserDetails authUser){
-        Creator creator = manager.getReference(Creator.class, authUser.getUsername());
         HttpHeaders headers = new HttpHeaders();
 
         headers.add(HttpHeaders.SET_COOKIE, ResponseCookie.from("RefreshToken")

@@ -6,13 +6,13 @@ import lombok.Data;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.time.LocalDateTime;
+
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 
 @Entity
-@Table(schema = "solar_inventory", name = "reports")
+@Table(name = "reports")
 @Data
 public class Reports {
     @Id

@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
  * @author Sylvanus Jedidiah*/
 @Data
 @NoArgsConstructor
-@Table(schema = "solar_inventory")
 @Entity
 public class ArraySpecs {
     @Id

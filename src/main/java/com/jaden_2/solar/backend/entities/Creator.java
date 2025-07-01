@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Data
-@Table(schema = "solar_inventory", name = "users")
+@Table(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Creator {

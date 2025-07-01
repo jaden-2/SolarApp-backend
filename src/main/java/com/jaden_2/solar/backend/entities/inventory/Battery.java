@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(schema = "solar_inventory",name = "batteries")
+@Table(name = "batteries")
 @Data
 @NoArgsConstructor
 public class Battery {
