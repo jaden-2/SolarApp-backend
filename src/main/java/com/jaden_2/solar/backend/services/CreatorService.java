@@ -24,7 +24,9 @@ public class CreatorService {
         this.encoder = encoder;
     }
 
-
+    public boolean existsByUsername(String username){
+        return repo.existsById(username);
+    }
     public CreatorResponse getUser(UserDetails details){
         List<String> roles = new ArrayList<>();
         details.getAuthorities().forEach(authority->{

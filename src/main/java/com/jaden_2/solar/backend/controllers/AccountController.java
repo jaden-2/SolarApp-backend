@@ -25,13 +25,8 @@ public class AccountController {
         return ResponseEntity.noContent().build();
     }
     @GetMapping("/exists")
-    public ResponseEntity<Boolean> usernameExists(@PathVariable String username){
-        try{
-            service.getUserByUsername(username);
-            return ResponseEntity.ok(true);
-        } catch (RuntimeException e) {
-            return ResponseEntity.ok(false);
-        }
+    public ResponseEntity<Boolean> usernameExists(@RequestParam("username") String username){
+        return ResponseEntity.ok(service.existsByUsername(username));
     }
 
     @PutMapping("/update")
