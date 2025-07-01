@@ -1,6 +1,4 @@
 package com.jaden_2.solar.backend.entities.enums;
-
-import lombok.Data;
 import lombok.Getter;
 
 @Getter

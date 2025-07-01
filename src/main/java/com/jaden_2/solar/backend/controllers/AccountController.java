@@ -2,7 +2,7 @@ package com.jaden_2.solar.backend.controllers;
 
 import com.jaden_2.solar.backend.DTOs.CreatorRequest;
 import com.jaden_2.solar.backend.exceptions.CredentialsUpdatedException;
-import com.jaden_2.solar.backend.repositories.CreatorRepo;
+
 import com.jaden_2.solar.backend.services.CreatorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

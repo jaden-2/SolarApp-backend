@@ -3,7 +3,6 @@ package com.jaden_2.solar.backend.services;
 import com.jaden_2.solar.backend.DTOs.CreatorResponse;
 import com.jaden_2.solar.backend.DTOs.CreatorRequest;
 import com.jaden_2.solar.backend.entities.Creator;
-import com.jaden_2.solar.backend.entities.converters.RoleConverter;
 import com.jaden_2.solar.backend.entities.enums.Roles;
 import com.jaden_2.solar.backend.exceptions.CredentialsUpdatedException;
 import com.jaden_2.solar.backend.repositories.CreatorRepo;

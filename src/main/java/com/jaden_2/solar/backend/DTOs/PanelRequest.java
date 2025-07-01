@@ -1,7 +1,6 @@
 package com.jaden_2.solar.backend.DTOs;
 
-import com.jaden_2.solar.backend.entities.inventory.Panel;
-import lombok.Data;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

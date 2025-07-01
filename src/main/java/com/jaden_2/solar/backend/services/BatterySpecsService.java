@@ -1,6 +1,5 @@
 package com.jaden_2.solar.backend.services;
 
-import com.jaden_2.solar.backend.DTOs.BatteryDTO;
 import com.jaden_2.solar.backend.DTOs.ComparisonResult;
 import com.jaden_2.solar.backend.entities.BatterySpecs;
 import com.jaden_2.solar.backend.entities.Configuration;

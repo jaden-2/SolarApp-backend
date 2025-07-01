@@ -33,7 +33,7 @@ public class InverterSpecsService {
         Inverter inverter = service.getInverterById(id);
         int parallel = (int) Math.ceil(recommendCap/inverter.getCapacity());
         int series = (sysVolts/ inverter.getSystemVoltage());
-        return new InverterSpecs(inverter, recommendCap, new Configuration(1, parallel));
+        return new InverterSpecs(inverter, recommendCap, new Configuration(series, parallel));
     }
     public void saveSpec(InverterSpecs specs){
         assert specs!=null: "Cannot create a new inverter that's null";

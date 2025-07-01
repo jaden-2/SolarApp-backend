@@ -2,14 +2,12 @@ package com.jaden_2.solar.backend.services;
 
 import com.jaden_2.solar.backend.DTOs.*;
 import com.jaden_2.solar.backend.entities.*;
-import com.jaden_2.solar.backend.repositories.CreatorRepo;
 import com.jaden_2.solar.backend.repositories.ReportRepo;
 import com.jaden_2.solar.backend.repositories.SystemReportsRepo;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

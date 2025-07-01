@@ -1,9 +1,9 @@
 package com.jaden_2.solar.backend.DTOs.sheets;
 
-import jakarta.persistence.Embeddable;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+
 
 /**
  * A record that contains details of the Dc cable*/

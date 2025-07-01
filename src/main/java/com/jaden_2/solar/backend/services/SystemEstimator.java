@@ -1,6 +1,5 @@
 package com.jaden_2.solar.backend.services;
 
-import com.jaden_2.solar.backend.entities.Configuration;
 import com.jaden_2.solar.backend.entities.enums.BatteryCategory;
 import com.jaden_2.solar.backend.entities.enums.DcCable;
 import com.jaden_2.solar.backend.entities.enums.PanelType;
