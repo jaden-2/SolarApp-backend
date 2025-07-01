@@ -12,7 +12,6 @@ import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.media.Schema;
@@ -25,6 +24,7 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -58,6 +58,9 @@ public class SecurityConfig {
     CreatorTokenService tokenService;
     @PersistenceContext
     EntityManager entityManager;
+    @Value("${cors.allowed-origins}")
+    List<String> allowedOrigins;
+
     @Bean
     SecurityFilterChain securityFilterChainConfig (HttpSecurity http, AuthenticationConfiguration config) throws Exception{
         AuthenticationManager manager = config.getAuthenticationManager();
@@ -86,7 +89,7 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration config = new CorsConfiguration();
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        config.setAllowedOrigins(List.of("https://localhost:5173"));
+        config.setAllowedOrigins(allowedOrigins);
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", HttpMethod.PATCH.name(), "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
