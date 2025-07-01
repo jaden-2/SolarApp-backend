@@ -73,7 +73,8 @@ public class SecurityConfig {
             request.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
             request.requestMatchers(HttpMethod.GET, "/auth/refresh").permitAll();
             request.requestMatchers(HttpMethod.POST, "/account/signup").permitAll();
-            //request.requestMatchers(HttpMethod.GET, "/api/docs", "/api/swagger-ui/**", "/v3/api-docs/**")
+            request.requestMatchers(HttpMethod.GET, "/ping").permitAll();
+            request.requestMatchers(HttpMethod.GET, "/account/exists").permitAll();
             request.requestMatchers(HttpMethod.GET, "/swagger/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll();
             request.anyRequest().authenticated();
         })

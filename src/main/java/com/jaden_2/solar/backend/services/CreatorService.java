@@ -24,6 +24,7 @@ public class CreatorService {
         this.encoder = encoder;
     }
 
+
     public CreatorResponse getUser(UserDetails details){
         List<String> roles = new ArrayList<>();
         details.getAuthorities().forEach(authority->{

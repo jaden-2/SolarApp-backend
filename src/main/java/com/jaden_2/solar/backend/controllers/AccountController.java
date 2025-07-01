@@ -24,6 +24,15 @@ public class AccountController {
 
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/exists")
+    public ResponseEntity<Boolean> usernameExists(@PathVariable String username){
+        try{
+            service.getUserByUsername(username);
+            return ResponseEntity.ok(true);
+        } catch (RuntimeException e) {
+            return ResponseEntity.ok(false);
+        }
+    }
 
     @PutMapping("/update")
     public ResponseEntity<String> updateAccount(@Valid @RequestBody CreatorRequest payload, @AuthenticationPrincipal UserDetails principal){
