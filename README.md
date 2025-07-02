@@ -16,8 +16,12 @@ project-root/
 ````markdown
 # 🔆 Solar Backend API
 
-This is the backend service for the Solar Estimation & Recommendation System, built with Spring Boot, PostgreSQL, and Docker. 
-It allows authenticated users to estimate solar needs, recommend real-world components from a database, generate reports, and export PDFs.
+This is the backend service for the Solar Estimation 
+& Recommendation System, built with Spring Boot, 
+PostgreSQL, and Docker. 
+It allows authenticated users to estimate solar needs, 
+recommend real-world components from a database, 
+generate reports, and export PDFs.
 
 ---
 
