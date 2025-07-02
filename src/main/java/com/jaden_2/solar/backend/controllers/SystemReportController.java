@@ -21,6 +21,7 @@ import org.thymeleaf.context.Context;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.time.format.DateTimeFormatter;
 
 @RestController
@@ -71,16 +72,26 @@ public class SystemReportController {
     }
 
     @GetMapping("/{reportId}/pdf")
-    public void generatePdfReport(HttpServletResponse response, @PathVariable("reportId") Integer reportId) throws RuntimeException, IOException {
+    public void generatePdfReport(HttpServletResponse response, @PathVariable("reportId") Integer reportId) throws RuntimeException, IOException{
+        ClassLoader classLoader = getClass().getClassLoader();
         ReportDTO report = service.getReport(reportId);
-        String gitHubLogo = new File("src/main/resources/static/GitHub_Logo.png").toURI().toString();
-        String gmailLogo = new File("src/main/resources/static/gmail.png").toURI().toString();
-        String linkedInLogo = new File("src/main/resources/static/InBug-Black.png").toURI().toString();
-
+        String gitHubLogo="";
+        String gmailLogo="";
+        String linkedInLogo="";
         Context context = new Context();
-        context.setVariable("github", gitHubLogo);
-        context.setVariable("gmail", gmailLogo);
-        context.setVariable("linkedIn", linkedInLogo);
+       try{
+           gitHubLogo = classLoader.getResource("static/GitHub_Logo.png").toURI().toString();
+           gmailLogo = classLoader.getResource("static/gmail.png").toURI().toString();
+           linkedInLogo = classLoader.getResource("static/InBug-Black.png").toURI().toString();
+
+           context.setVariable("github", gitHubLogo);
+           context.setVariable("gmail", gmailLogo);
+           context.setVariable("linkedIn", linkedInLogo);
+       }catch (URISyntaxException e){
+           System.out.println("Failed to load Logos");
+       }
+
+
         context.setVariable("report", report);
         context.setVariable("createdAt", report.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm z")));
         context.setVariable("year", report.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy")));
