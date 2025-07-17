@@ -82,12 +82,11 @@ MIT License — use freely, attribution appreciated.
 📧 [Send Email](mailto:jedidiahamonia1@gmail.com)
 👨‍💻 GitHub: [@jaden-2](https://github.com/jaden-2)
 
+⚠️ Note: This project uses secure, cookie-based authentication. Swagger UI may not function correctly without a valid session.
 ````
-
 ---
 
 ## ✅ `API_DOCUMENTATION.md` (Full API Reference)
-
 ```markdown
 # 📘 API Documentation — Solar Estimation & Recommendation
 
@@ -96,7 +95,6 @@ MIT License — use freely, attribution appreciated.
 **Docs Endpoint:** [`/swagger/api-docs`](http://localhost:8080/swagger/api-docs)
 
 ---
-⚠️ Note: This project uses secure, cookie-based authentication. Swagger UI may not function correctly without a valid session.
 
 ## 🔐 Authentication
 
@@ -164,6 +162,8 @@ MIT License — use freely, attribution appreciated.
 - Swagger UI available for interactive testing (if enabled in prod/dev profile).
 
 ---
+
+````
 ## 🤝 Contributing
 
 Contributions, suggestions, and forks are welcome. To contribute:
@@ -172,13 +172,10 @@ Contributions, suggestions, and forks are welcome. To contribute:
 2. Create a new branch (`git checkout -b feature/your-feature`)
 3. Commit your changes (`git commit -m 'Add feature'`)
 4. Push to your fork and submit a pull request
-
-````
 ## 👤 Author
 
 **Sylvanus Jedidiah**  
 🌐 [LinkedIn](https://www.linkedin.com/in/sylvanus-jedidiah/)  
 📧 [Send Email](mailto:jedidiahamonia1@gmail.com)
 👨‍💻 GitHub: [@jaden-2](https://github.com/jaden-2)
-````
 
